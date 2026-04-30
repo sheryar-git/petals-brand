@@ -1,0 +1,783 @@
+/*
+ *      ╲  │  ╱
+ *       ╲ │ ╱
+ *  ─── ─── ─── ─── ─── ─── ───       PETALS
+ *       ╱ │ ╲                       design tokens
+ *      ╱  │  ╲
+ *
+ * Source of truth for color, type, spacing, motion, and the mark.
+ * Everything Petals reads from here — instruments, website, the rest.
+ *
+ * Petals is the brand. petals.fm is the domain. Don't confuse them.
+ *
+ * No @font-face here — each surface declares its own path:
+ *   Folium:  ../fonts/BerkeleyMonoVariable-Regular.ttf
+ *   Website: /fonts/BerkeleyMonoVariable-Regular.ttf
+ *   Assets:  ../../instruments/folium/ui/fonts/...
+ * Always Berkeley Mono Variable, weights 100-900.
+ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+
+  /* ── Surfaces — Nightshade
+   * Violet dusk. Panels lift above the body. Depth without black.
+   */
+  --bg:          #141224;
+  --surface:     #1e1c30;
+  --surface-up:  #262438;
+
+  /* ── Borders — directional light. Top catches it, bottom recedes. */
+  --border-light: #3c3652;
+  --border:       #302c44;
+  --border-dim:   #201c30;
+
+  /* ── Controls
+   * Groove: where sliders ride and knobs turn. Recessed.
+   * Control: button face, knob disk. Raised.
+   */
+  --groove:       #161428;
+  --groove-edge:  #2a2640;
+  --control:      #2a283e;
+  --control-edge: #34304a;
+
+  /* ── Text */
+  --text:        #c0c0d4;
+  --text-dim:    #8484a0;
+  --text-muted:  #5c5c78;
+
+  /* ── Accents
+   *   accent   purple    brand primary. LFO1, active states, focus.
+   *   accent2  blue      LFO2, the cool complement.
+   *   accent3  rose      danger, destructive actions.
+   *   accent4  gold      lock + info states.
+   *   accent5  sage      MTS-ESP source, the green light.
+   */
+  --accent:      #7868D4;
+  --accent-dim:  #6050B0;
+  --accent-glow: rgba(120, 104, 212, 0.12);
+  --accent2:     #70A8D8;
+  --accent2-dim: #5088B0;
+  --accent2-glow:rgba(112, 168, 216, 0.12);
+  --accent3:     #D07080;
+  --accent3-dim: #A85868;
+  --accent4:     #C8A848;
+  --accent4-dim: #A08838;
+  --accent4-glow:rgba(200, 168, 72, 0.10);
+  --accent5:     #78A858;
+  --accent5-dim: #588040;
+  --accent5-glow:rgba(120, 168, 88, 0.08);
+  --glow-white:     #e8e4f0;
+  --glow-white-soft: rgba(232, 228, 240, 0.15);
+  --glow-white-med:  rgba(232, 228, 240, 0.2);
+  --glow-white-hot:  rgba(232, 228, 240, 0.25);
+
+  /* ── Commerce accents (brand surfaces only)
+   * Different category from the 5 system accents — these mean money,
+   * not signal flow. They live on the website, not inside instruments.
+   *
+   *   --accent-cta           buy-button green. Not jade, not sage. Money green.
+   *   --product-folium-cta   Folium's warm cream on website CTAs.
+   *                          Future products: --product-<name>-cta.
+   */
+  --accent-cta:         #578859;
+  --accent-cta-dim:     #3A6B3D;   /* light-theme variant */
+  --product-folium-cta: #c9a86c;
+
+  /* ── Section tints — signal-path color coding
+   * Each module gets its own header color. All sit in the same energy
+   * band (~45% lightness, ~25% saturation) — colored pencils, same
+   * sharpness. The arc follows the signal:
+   *
+   *   sage → purple → gold → rose → blue → neutral
+   *   input  osc      env    filter rev    output
+   */
+  --tint-input:       #607848;   /* moss */
+  --tint-oscillator:  #6860A0;   /* wisteria */
+  --tint-envelope:    #908048;   /* amber */
+  --tint-seedling:    #708858;   /* spring green */
+  --tint-scope:       #7870A0;   /* lavender */
+  --tint-sequencer:   #A08090;   /* dusty pink */
+  --tint-filter:      #986070;   /* rose */
+  --tint-reverb:      #5880A0;   /* indigo */
+  --tint-output:      #787880;   /* silver */
+  --tint-morph:       #707080;   /* blue-grey */
+  --tint-master:      #787880;   /* silver */
+  --tint-eq:          #5880A0;   /* indigo (FX chain) */
+
+  /* ── Interaction
+   * White glow = "you are touching this." Purple stays for brand + mod.
+   */
+  --active:      var(--glow-white);
+
+  --danger:      #C85050;
+
+  /* ── Glow shadows */
+  --glow-accent:  0 0 4px rgba(120, 104, 212, 0.15);
+  --glow-accent2: 0 0 4px rgba(112, 168, 216, 0.15);
+  --glow-accent4: 0 0 4px rgba(200, 168, 72, 0.10);
+  --glow-accent5: 0 0 4px rgba(120, 168, 88, 0.08);
+
+  /* ── Type — UI scale (inside instruments)
+   * 10px ceiling, 7px floor. Line-heights snap to the 5px grid.
+   * Every font-size MUST set the matching line-height.
+   *
+   *   font   line-height   box   ratio
+   *   10px   15px          3×5   1.50
+   *    9px   10px          2×5   1.11
+   *    8px   10px          2×5   1.25
+   *    7px   10px          2×5   1.43
+   */
+  --fs-header:    10px;
+  --fs-value:      9px;
+  --fs-secondary:  8px;
+  --fs-label:      7px;
+
+  --lh-header:    15px;
+  --lh-value:     10px;
+  --lh-secondary: 10px;
+  --lh-label:     10px;
+
+  /* ── Type — brand scale
+   * For PETALS + tagline only. Website heroes, brand sheets, ads.
+   */
+  --fs-brand-hero:     32px;
+  --fs-brand-standard: 20px;
+  --fs-brand-compact:  10px;   /* same as --fs-header inside instruments */
+
+  /* ── Type — page scale
+   * Website body, nav, footer. Read at desktop distance (~70cm).
+   * Different from the instrument scale (panel distance, ~45cm) and
+   * the lockup tiers (display). Use only on brand surfaces.
+   */
+  --fs-page-body:      12px;   /* body text, nav links, footer columns */
+  --fs-page-secondary: 11px;   /* small nav text, mobile breakpoints */
+  --fs-page-strong:    15px;   /* footer column heads, emphasized body */
+
+  /* ── Type — lockup tiers
+   * Mark + text where the mark's height = the text's cap height.
+   * Berkeley Mono cap ratio = 0.680 (sCapHeight 680 / unitsPerEm 1000).
+   * Each tier pairs a font-size with a mark-size so that
+   * fontSize × 0.68 lands on a canonical 5px-grid mark size.
+   * Full rationale in TOKENS.md → Lockup System.
+   */
+  --cap-ratio: 0.68;
+
+  --fs-lockup-grand:    66px;   --mark-lockup-grand:    45px;
+  --fs-lockup-display:  59px;   --mark-lockup-display:  40px;
+  --fs-lockup-hero:     44px;   --mark-lockup-hero:     30px;
+  --fs-lockup-subhead:  37px;   --mark-lockup-subhead:  25px;
+  --fs-lockup-standard: 22px;   --mark-lockup-standard: 15px;
+  --fs-lockup-compact:  15px;   --mark-lockup-compact:  10px;
+  --fs-lockup-micro:    10px;   --mark-lockup-micro:     7px;
+
+  /* ── Letter-spacing
+   * Contextual, not formulaic. Wider for brand display, tighter for data.
+   *
+   * Brand (wide, airy):
+   *   32px → 10px    hero
+   *   20px →  5px    standard
+   *   10px →  5px    compact / instrument title
+   *    9px →  3px    card name
+   *    8px →  5px    sub-brand
+   *
+   * Labels:
+   *    8px → 2.5px   instrument section labels
+   *    8px →   4px   brand-surface section titles
+   *    7px →   2px   small uppercase labels
+   *    7px → 1.5px   param labels
+   *    7px →   1px   param names, spec cells
+   *
+   * Values (data, tight):
+   *    8px → 0.5px   preset items, readouts
+   *    7px → 0.5px   fine values
+   *    7px →   0px   raw data (hex codes)
+   */
+  --ls-brand-hero:     10px;
+  --ls-brand-standard:  5px;
+  --ls-title:           5px;
+  --ls-section-title:   4px;   /* brand surfaces */
+  --ls-section-label: 2.5px;   /* inside instruments */
+  --ls-small-label:     2px;
+  --ls-param-label:   1.5px;
+  --ls-param-name:      1px;
+  --ls-value:         0.5px;
+
+  /* ── Spacing — 5px grid
+   * Every gap, margin, padding is a multiple of 5.
+   * No 3px. No 7px. No 12px. If it's not 0 or 5n, it's wrong.
+   *
+   * Exception: sub-pixel optical alignment (3.5px padding-top, etc.)
+   * is fine ONLY when computed from SVG geometry. Document the formula.
+   * Never approximate, never round to the grid.
+   */
+  --sp-1:  5px;
+  --sp-2: 10px;
+  --sp-3: 15px;
+  --sp-4: 20px;
+  --sp-5: 25px;
+  --sp-6: 30px;
+
+  /* ── Control sizing — sonic hierarchy
+   * Visual weight = sonic importance. The biggest knob matters most.
+   * These are the ONLY permitted sizes. No in-between values.
+   *
+   *   44px   primary sonic         filter cutoff
+   *   40px   major secondary       noise level
+   *   36px   tertiary / fx         reverb decay
+   *   28px   utility / modifier    resonance, gain, glide
+   *   20px   modulation            LFO rate
+   *   10px   inline micro          mod-bar end knobs (trim viewBox)
+   *
+   * Inline 10px knobs MUST use Dial's `trim` prop — otherwise the 64px
+   * viewBox leaves ~1.5px dead space per side and the grid breaks.
+   */
+
+  /* ── Dial internal geometry (64px viewBox)
+   * All radii from center (32, 32). Rings spaced 5px apart.
+   *
+   *   RADIUS       = 20    arc track (main control ring)
+   *   TICK_INNER_R = 25    inner edge of ticks (5px from arc)
+   *   TICK_OUTER_R = 27.5  outer edge of ticks (2.5px tick length)
+   *   INDICATOR_R  = 15    indicator tip (5px inside arc)
+   *   MOD_R        = 28    modulation ring (0.5px outside ticks)
+   *   KT_R         = 24    key-track dot (between arc and mod ring)
+   *
+   * Trim viewBox for inline knobs: "11 11 42 42" (crops to arc).
+   *
+   * Dot radii (5px-grid by diameter):
+   *   r=2.5   →  5px   center dot, mod position
+   *   r=1.25  →  2.5px key-track dot
+   *   r=0.5   →  1px   lock tick dots
+   *
+   * Stroke widths:
+   *   1.25px  arc track, value arc, mod ring, indicator
+   *   0.5px   inner disk border, tick marks
+   */
+
+  /* ── Tab strip — mutually-exclusive options
+   * Brand-wide pattern (filter mode, voice mode, etc.). Single groove
+   * container, text-only tabs. Reused across plugin UI and website.
+   *
+   * Container:
+   *   background: --groove          recessed channel
+   *   border: 0.75px --groove-edge  rim
+   *   border-radius: 2px
+   *   padding: 0                    tabs fill edge-to-edge
+   *   display: flex
+   *
+   * Tab (inactive):
+   *   background: transparent
+   *   border: none
+   *   color: --text-muted
+   *   font: --fs-label (7px), uppercase
+   *   line-height: --lh-label (10px)
+   *   letter-spacing: --ls-param-name
+   *   padding: 0 5px
+   *   flex: 1
+   *
+   * Tab (hover):  color: --text-dim
+   * Tab (active): background --control, color --active, radius 1.5px
+   *
+   * Height: 10px (line-height handles it, no vertical padding).
+   * No per-tab borders. Container border only.
+   */
+
+  /* ── Harmonic lock — MTS-ESP filter quantization
+   * When on, filter cutoff snaps to frequencies from the active MTS-ESP
+   * scale. Same intervals as oscillator ratio lock, projected across
+   * octaves within the 20-20kHz range.
+   *
+   * Lock indicator: PetalsMark (7px) below the cutoff knob.
+   *   off:    --text-muted
+   *   on:     --glow-white + drop-shadow(0 0 2.5px --glow-white-soft)
+   *   hidden: when no MTS-ESP source connected.
+   *
+   * Lock ticks: r=0.5 dots on arc at snap positions.
+   *   unlocked: --text-muted, opacity 0.2
+   *   locked:   --glow-white, opacity 0.5
+   *
+   * Only on 44px cutoff knobs. Both filters lock independently to the
+   * same frequency set. DSP quantizes post-modulation: LFO sweeps step
+   * between lock frequencies.
+   */
+
+  /* ── Slider geometry
+   * All horizontal sliders share canonical dimensions.
+   *   OscSlider:  125×22px, track y=6,   h=5, visual center 8.5px
+   *   ADSRBar:    125×15px, track y=5,   h=5, visual center 7.5px
+   *   ModBar:     125×10px, track y=2.5, h=5, visual center 5px
+   *
+   * Track: 5px height, 0.75px stroke, rx=1, groove fill.
+   * Cursor dot: r=2 (2.5 active). Clamped to [DOT_R+0.5, W-DOT_R-0.5].
+   * Drag: movementX. Normal 350px/full travel. Shift = fine, 2000px.
+   */
+
+  /* ── Layout — golden ratio
+   * Canvas: 840 × 480 (7:4)
+   * Grid: 210 | 340 (1fr) | 210, gap 20
+   * Wing:Center = 21:34 — consecutive Fibonacci. φ ≈ 1.619.
+   *
+   * The same math driving the phyllotaxis visualization governs the
+   * column structure it sits inside. That's the whole point.
+   *
+   * Inside the wings, osc-rows use a rigid two-column split:
+   *   30px label | 10px gap | flex slider (~170px)
+   * Mod-bar rows with inline knobs mirror this exactly:
+   *   30px knobs | 10px gap | flex modbar
+   * Knobs sit directly under labels. Non-negotiable.
+   */
+
+  /* ── Label-to-control optical alignment
+   * When a label sits beside a slider (not centered by flex), compute:
+   *   padding-top = controlVisualCenter − (labelLineHeight / 2)
+   *
+   * With label line-height = 10px (text center = 5px):
+   *   OscSlider:  8.5 − 5 = 3.5px
+   *   ADSRBar:    centered by flex → 0px
+   *   ModBar:     5 − 5     = 0px
+   *
+   * Exact values. Don't round. Don't snap to the 5px grid.
+   * This is optical math, not spacing.
+   *
+   * Section label header: 2.5px vertical padding → 15px total (3×5).
+   * 2.5px is a half-grid optical value — same exception category.
+   */
+
+  /* ── Grain — surface texture
+   * Inline-SVG Perlin noise, four textures, composited per-element.
+   * Coarser on raw surfaces, finer on polished ones.
+   *
+   * baseFrequency (higher = finer grain):
+   *   body    1.8    cinematic film grain
+   *   panel   2.2    medium
+   *   control 2.8    fine
+   *   display 3.5    finest
+   *
+   * Opacity per theme:
+   *   Nightshade: body 0.40, panel 0.25, wing 0.35, control 0.15, display 0.08
+   *   Kinari:     body 0.25, panel 0.15, wing 0.20, control 0.08, display 0.04
+   */
+  --grain-body:    url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-panel:   url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-control: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.8' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-display: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-body-opacity:    0.40;
+  --grain-panel-opacity:   0.25;
+  --grain-wing-opacity:    0.35;
+  --grain-control-opacity: 0.15;
+  --grain-display-opacity: 0.08;
+
+  /* ── Text containment
+   * Any text inside a width-constrained container (flex child with
+   * min-width:0, fixed parent, grid cell) needs overflow handling.
+   * Not optional.
+   *
+   *   overflow: hidden;
+   *   text-overflow: ellipsis;
+   *   white-space: nowrap;
+   *
+   * Flex children that need to shrink:
+   *   min-width: 0;
+   *
+   * Buttons in a row (LFO pattern/slew/mode):
+   *   flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+   *
+   * Tabs in a header strip:
+   *   white-space: nowrap; overflow: hidden;
+   *   Parent: overflow: hidden; or min-width: 0;
+   *
+   * Section headers with right-aligned tabs:
+   *   .section-label { min-width: 0; }
+   *   Tab container:  overflow: hidden; flex-shrink: 0;
+   *   Label text:     overflow: hidden; text-overflow: ellipsis;
+   */
+
+  /* ── Border weights — three tiers, harmonic
+   *   0.5px    hair    dividers, inner separators
+   *   0.75px   fine    controls, tab strips, interactive borders
+   *   1px      base    section panels, primary containers
+   *
+   * 0.5 → 0.75 → 1.0. Each step is roughly √2.
+   * Like line weights in technical drawing.
+   *
+   * Directional light at every weight:
+   *   border-top-color: --border-light   catches light
+   *   border-color:     --border         neutral sides
+   *   border-bottom-color: --border-dim  recedes
+   */
+  --border-weight:      1px;
+  --border-weight-fine: 0.75px;
+  --border-weight-hair: 0.5px;
+
+  /* ── Border radius */
+  --radius-none: 0px;
+  --radius-soft: 2px;
+  --radius-max:  4px;
+
+  /* ── Transitions
+   * How things move is part of the brand. Fast at the control level,
+   * slower at the state level.
+   */
+  --ease:         ease;
+  --ease-out:     ease-out;
+  --ease-linear:  linear;     /* frame-tied motion (progress, scrub) */
+  --tr-instant:   0.05s;      /* LEDs, limiter, immediate feedback */
+  --tr-tick:      0.1s;       /* progress fill, scrub (same as --tr-fast, named for intent) */
+  --tr-fast:      0.1s;       /* hover, active snap-back */
+  --tr-normal:    0.12s;      /* standard — the Petals feel */
+  --tr-gentle:    0.15s;      /* border focus, soft reveals */
+  --tr-slow:      0.25s;      /* value display, phyllotaxis */
+  --tr-breath:    0.3s;       /* theme-level shifts, garden glow */
+
+  /* ── Entry animation
+   * Page-level choreography. Seconds, not tenths. Use on section entry
+   * and reveals — never on interactive controls.
+   */
+  --tr-entry-fast:   0.6s;
+  --tr-entry-normal: 0.8s;
+  --tr-entry-slow:   1.0s;
+  --ease-entry: cubic-bezier(0.16, 1, 0.3, 1);   /* easeOutExpo */
+
+  /* ── Alpha — semantic state
+   * Animation keyframes use raw values (they're curve points, not states).
+   */
+  --alpha-grain:    0.05;   /* grain texture, scan lines */
+  --alpha-disabled: 0.30;   /* inactive / disabled */
+  --alpha-inactive: 0.50;   /* mid-state, deemphasized */
+  --alpha-hover:    0.60;   /* hover, soft emphasis */
+  --alpha-emphasis: 0.80;   /* primary emphasis */
+  --alpha-strong:   0.90;   /* near-solid */
+
+  /* ── Optical offsets
+   * Sub-grid values for the rare cases where the 5px grid hurts the eye.
+   * Use sparingly. Always comment the optical reason.
+   */
+  --optical-tight: 2.5px;   /* label hugging knob from below */
+
+  /* ── Accent roles, in one place
+   *   --accent    purple    brand primary. Active, focus, LFO1.
+   *   --accent2   blue      LFO2, cool complement.
+   *   --accent3   rose      danger / destructive.
+   *   --accent4   gold      lock + info states.
+   *   --accent5   sage      MTS-ESP source, the green light.
+   *
+   * Brand surfaces show --accent only.
+   * Instruments show all five, but --accent dominates by area.
+   */
+
+  /* ── Surface overlay
+   * Translucent surface for sticky bars, dropdowns over content.
+   * Theme-aware via color-mix — follows --surface across themes.
+   */
+  --surface-overlay: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+
+
+/* ──────────────────────────────────────────────────────────
+   LIGHT MODE — Kinari
+   ──────────────────────────────────────────────────────────
+   Cream paper, ink, pigments. The instrument feels printed,
+   not lit. Active = pressed ink, not glow.
+   ────────────────────────────────────────────────────────── */
+
+:root[data-dir="light"] {
+
+  /* ── Surfaces — kinari: cream with a grey-pink undertone, not yellow */
+  --bg:          #E2DCD4;
+  --surface:     #ECE8E0;
+  --surface-up:  #F4F2EC;
+
+  /* ── Borders — pencil on paper, near-uniform spread */
+  --border-light: #C8C0B0;
+  --border:       #C0B8A8;
+  --border-dim:   #B8AE9E;
+
+  /* ── Controls — pressed and raised paper */
+  --groove:       #D4CCBE;
+  --groove-edge:  #C0B6A4;
+  --control:      #EAE6DE;
+  --control-edge: #CEC6B6;
+
+  /* ── Text — sumi ink, always warm */
+  --text:        #2A2420;
+  --text-dim:    #6E6456;
+  --text-muted:  #9C9080;
+
+  /* ── Accents — botanical pigments, deep enough to read on cream */
+
+  /* wisteria — fuji-iro */
+  --accent:      #5C48B4;
+  --accent-dim:  #483898;
+  --accent-glow: rgba(92, 72, 180, 0.15);
+
+  /* indigo — ai */
+  --accent2:     #3468A0;
+  --accent2-dim: #285088;
+  --accent2-glow:rgba(52, 104, 160, 0.15);
+
+  /* peony — beni */
+  --accent3:     #C04858;
+  --accent3-dim: #983848;
+
+  /* saffron — ukon */
+  --accent4:     #A88818;
+  --accent4-dim: #886C10;
+  --accent4-glow:rgba(168, 136, 24, 0.10);
+
+  /* moss — koke */
+  --accent5:     #5C8038;
+  --accent5-dim: #446828;
+  --accent5-glow:rgba(92, 128, 56, 0.08);
+
+  /* ── Active — pressed ink, no glow */
+  --glow-white:     #2A2420;
+  --glow-white-soft: rgba(42, 36, 32, 0.08);
+  --glow-white-med:  rgba(42, 36, 32, 0.12);
+  --glow-white-hot:  rgba(42, 36, 32, 0.18);
+  --active:      #2A2420;
+
+  --danger:      #B04040;
+
+  /* ── Section tints — same energy band as dark theme, transposed to cream */
+  --tint-input:       #587040;   /* moss */
+  --tint-oscillator:  #584898;   /* wisteria */
+  --tint-envelope:    #806818;   /* saffron */
+  --tint-seedling:    #608040;   /* spring */
+  --tint-scope:       #685898;   /* violet */
+  --tint-sequencer:   #906070;   /* blush */
+  --tint-filter:      #984050;   /* rouge */
+  --tint-reverb:      #386088;   /* indigo */
+  --tint-output:      #686060;   /* warm grey */
+  --tint-morph:       #606068;   /* cool grey */
+  --tint-master:      #686060;   /* warm grey */
+  --tint-eq:          #386088;   /* indigo (FX chain) */
+
+  /* ── Glow shadows */
+  --glow-accent:  0 0 6px rgba(92, 72, 180, 0.15);
+  --glow-accent2: 0 0 6px rgba(52, 104, 160, 0.15);
+  --glow-accent4: 0 0 6px rgba(168, 136, 24, 0.10);
+  --glow-accent5: 0 0 6px rgba(92, 128, 56, 0.08);
+
+  /* ── Grain — paper fiber */
+  --grain-body-opacity:    0.25;
+  --grain-panel-opacity:   0.15;
+  --grain-wing-opacity:    0.20;
+  --grain-control-opacity: 0.08;
+  --grain-display-opacity: 0.04;
+}
+
+
+/* ──────────────────────────────────────────────────────────
+   WEBSITE SURFACE — the gallery wall
+   ──────────────────────────────────────────────────────────
+   Cooler and flatter than Nightshade. The wall the work hangs on,
+   not the instrument itself.
+
+   Applied via data-surface="website" on <html> in Base.astro.
+   Combines with data-dir="light" for the light-mode website
+   (later [data-dir] block wins by source order; specificity equal).
+
+   Overrides surface / border / text only. Accents inherit from
+   Nightshade so the brand purple stays the same on every surface.
+   ────────────────────────────────────────────────────────── */
+
+:root[data-surface="website"] {
+  --bg:           #0C0B10;
+  --surface:      #14131A;
+  --surface-up:   #1C1B22;
+  --groove:       #08080C;
+  --groove-edge:  #201F28;
+  --control:      #1C1B24;
+  --control-edge: #28272E;
+  --border-light: #28272E;
+  --border:       #1C1B22;
+  --border-dim:   #121118;
+  --text:         #C8C6D0;
+  --text-dim:     #7C7A88;
+  --text-muted:   #4C4A58;
+}
+
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-family: 'Berkeley Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+}
+
+
+/* ──────────────────────────────────────────────────────────
+   BRAND LOCKUP CLASSES (legacy — see lockup-* below for new work)
+   ────────────────────────────────────────────────────────── */
+
+/* Hero — brand sheets, landing page */
+.brand-hero {
+  font-size: var(--fs-brand-hero);
+  font-weight: 400;
+  letter-spacing: var(--ls-brand-hero);
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brand-hero-tagline {
+  font-size: var(--fs-secondary);
+  font-weight: 400;
+  letter-spacing: var(--ls-title);
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+/* Standard — website header, video */
+.brand-standard {
+  font-size: var(--fs-brand-standard);
+  font-weight: 400;
+  letter-spacing: var(--ls-brand-standard);
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brand-standard-tagline {
+  font-size: var(--fs-secondary);
+  font-weight: 400;
+  letter-spacing: var(--ls-section-label);
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+/* Compact — instrument header */
+.brand-compact {
+  font-size: var(--fs-brand-compact);
+  font-weight: 400;
+  letter-spacing: var(--ls-title);
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.brand-compact-studio {
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: var(--ls-small-label);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+
+/* ──────────────────────────────────────────────────────────
+   LOCKUP CLASSES — mark + text, cap-height matched
+   ──────────────────────────────────────────────────────────
+   Mark height = cap height via CSS 1cap. The browser measures
+   cap height from the font file. No manual pixel matching.
+   Mark `size` prop selects stroke weight only.
+
+   Set BOTH font-size (via tier modifier) and Mark `size` from the
+   SAME tier. No mixing.
+
+   <div class="lockup lockup-display lockup-vertical">
+     <Mark size={40} class="lockup-mark" />
+     <span class="lockup-text">PETALS</span>
+   </div>
+   ────────────────────────────────────────────────────────── */
+
+.lockup {
+  display: flex;
+  align-items: center;
+}
+
+.lockup-vertical {
+  flex-direction: column;
+}
+
+.lockup-mark {
+  color: var(--accent);
+  flex-shrink: 0;
+  width:  1cap;
+  height: 1cap;
+}
+
+.lockup-text {
+  font-size: inherit;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: var(--cap-ratio);
+}
+
+/* Tier modifiers — each sets font-size + per-tier letter-spacing.
+   text-indent equals letter-spacing to optically center tracked uppercase. */
+.lockup-grand                 { font-size: var(--fs-lockup-grand);    gap: 15px; }
+.lockup-grand .lockup-text    { letter-spacing: 20px; text-indent: 20px; }
+
+.lockup-display               { font-size: var(--fs-lockup-display);  gap: 15px; }
+.lockup-display .lockup-text  { letter-spacing: 15px; text-indent: 15px; }
+
+.lockup-hero                  { font-size: var(--fs-lockup-hero);     gap: 10px; }
+.lockup-hero .lockup-text     { letter-spacing: 12px; text-indent: 12px; }
+
+.lockup-subhead               { font-size: var(--fs-lockup-subhead);  gap: 10px; }
+.lockup-subhead .lockup-text  { letter-spacing: 10px; text-indent: 10px; }
+
+.lockup-standard              { font-size: var(--fs-lockup-standard); gap: 10px; }
+.lockup-standard .lockup-text { letter-spacing: 5px;  text-indent: 5px;  }
+
+.lockup-compact               { font-size: var(--fs-lockup-compact);  gap: 5px; }
+.lockup-compact .lockup-text  { letter-spacing: 5px;  text-indent: 5px;  }
+
+.lockup-micro                 { font-size: var(--fs-lockup-micro);    gap: 5px; }
+.lockup-micro .lockup-text    { letter-spacing: 5px;  text-indent: 5px;  }
+
+
+/* ──────────────────────────────────────────────────────────
+   SECTION CONTAINERS
+   ────────────────────────────────────────────────────────── */
+
+.section-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top-color: var(--border-light);
+  border-bottom-color: var(--border-dim);
+  padding: var(--sp-2);
+}
+
+.section-label {
+  font-size: var(--fs-secondary);
+  font-weight: 400;
+  letter-spacing: var(--ls-section-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* ──────────────────────────────────────────────────────────
+   MARK — progressive stroke weight
+   ──────────────────────────────────────────────────────────
+   Goal: ~1.5px rendered stroke at any display size.
+   Use the petals-mark.js function or hand-roll the SVG.
+
+   display size → stroke-width (viewBox 200×200)
+     200px+  →  4
+     100px+  →  5
+      60px+  →  7
+      40px+  →  9
+      28px+  → 12
+      20px+  → 16
+      <20px  → 20
+
+   Below 20px: butt caps + wider center gap for clarity.
+   See petals-mark.js → PATHS_SMALL.
+
+   Pair the mark to adjacent text:
+     hero (32px)       → 32px mark
+     standard (20px)   → 20px mark
+     compact (7px)     →  7px mark
+     section (8px)     →  8px mark
+   ────────────────────────────────────────────────────────── */
