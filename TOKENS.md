@@ -140,6 +140,10 @@ Set BOTH font-size and Mark `size` from the same tier. No mixing.
 
 `text-indent` matches `letter-spacing` so tracked uppercase text sits optically centered.
 
+### Optical alignment nudge
+
+Horizontal lockups apply `transform: translateY(0.05em)` to the mark. Berkeley Mono's ascent ratio is ~0.89, putting cap-visual-center at ~0.55em from em-box top — not at 0.5em. Flex `align-items: center` aligns geometric centers, leaving the mark visually 0.05em higher than the cap-line. The translate compensates. Em-relative so it scales correctly across all tiers. Vertical lockups skip this — no horizontal centerline to match.
+
 ### Lockup gap
 
 | Orientation | Compact / Standard | Hero+ |

@@ -704,6 +704,19 @@ body {
   height: 1cap;
 }
 
+/* Optical alignment nudge (horizontal lockups only).
+   Berkeley Mono's ascent ratio is ~0.89, so cap-glyphs paint with their
+   visual center at ~0.55em from the em-box top — not at the geometric
+   center (0.5em). Flex `align-items: center` aligns the mark's geometric
+   center to the text's em-box geometric center, but the mark's visual
+   center then sits 0.05em ABOVE the text's cap visual center. The 0.05em
+   downward translate compensates so the mark optically lines up with the
+   cap-line at any tier (em-relative scales correctly). Vertical lockups
+   stack mark above text — no horizontal centerline to align. */
+.lockup:not(.lockup-vertical) .lockup-mark {
+  transform: translateY(0.05em);
+}
+
 .lockup-text {
   font-size: inherit;
   font-weight: 400;
