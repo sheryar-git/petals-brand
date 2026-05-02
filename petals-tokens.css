@@ -110,6 +110,47 @@
   --tint-master:      #787880;   /* silver */
   --tint-eq:          #5880A0;   /* indigo (FX chain) */
 
+  /* ── Quasar AFX accents
+   * Two stage indicators for Quasar's CRYSTAL (high-Q resonant ring) and
+   * GRIT (saturation + bitcrush) sound stages. Both must read on --bg
+   * and harmonize with --accent (purple, hue ~290).
+   *
+   *   crystal   icy white-cyan, sister to --accent2 but pushed higher
+   *             in lightness so it reads as "metallic ice."
+   *   grit      warm amber-red, complementary to purple. Distinct from
+   *             --accent4 gold so lock and grit don't semantically blur.
+   */
+  --crystal-glow: oklch(0.93 0.05 215);
+  --grit-glow:    oklch(0.74 0.13 50);
+
+  /* ── Octave tints — Quasar keymap, cycles every 12 MIDI keys
+   * Eight values around the hue wheel, all at the same lightness and
+   * chroma. Same energy band as the section --tint-* family (colored
+   * pencils, same sharpness). Not a rainbow stripe. A slow rotation
+   * starting at --accent's purple anchor and closing back toward it.
+   *
+   * At 4x4px dot scale the eye distinguishes hue contrast even when
+   * lightness is held flat. All read on --bg (#141224, L=0.20).
+   *
+   * Hue rotation (45 deg per step):
+   *   1 wisteria  290    (anchors to --accent)
+   *   2 indigo    245
+   *   3 steel     200
+   *   4 jade      155
+   *   5 leaf      110
+   *   6 cream      60
+   *   7 ember     25
+   *   8 mauve     340   (closes back toward --accent)
+   */
+  --key-octave-1: oklch(0.62 0.10 290);
+  --key-octave-2: oklch(0.62 0.10 245);
+  --key-octave-3: oklch(0.62 0.10 200);
+  --key-octave-4: oklch(0.62 0.10 155);
+  --key-octave-5: oklch(0.62 0.10 110);
+  --key-octave-6: oklch(0.62 0.10 60);
+  --key-octave-7: oklch(0.62 0.10 25);
+  --key-octave-8: oklch(0.62 0.10 340);
+
   /* ── Interaction
    * White glow = "you are touching this." Purple stays for brand + mod.
    */
@@ -557,6 +598,27 @@
   --tint-morph:       #606068;   /* cool grey */
   --tint-master:      #686060;   /* warm grey */
   --tint-eq:          #386088;   /* indigo (FX chain) */
+
+  /* ── Quasar AFX accents — pigment-side
+   * Crystal becomes a deeper teal-blue (cool ink). Grit deepens to a
+   * cinnabar red. Both read on cream without losing identity.
+   */
+  --crystal-glow: oklch(0.55 0.08 215);
+  --grit-glow:    oklch(0.55 0.14 35);
+
+  /* ── Octave tints — pigment-side
+   * Same hue rotation, transposed to ink: lower lightness (read on
+   * cream), slightly higher chroma (deeper pigments). 4x4px dots stay
+   * distinguishable at panel distance.
+   */
+  --key-octave-1: oklch(0.50 0.12 290);
+  --key-octave-2: oklch(0.50 0.12 245);
+  --key-octave-3: oklch(0.50 0.12 200);
+  --key-octave-4: oklch(0.50 0.12 155);
+  --key-octave-5: oklch(0.50 0.12 110);
+  --key-octave-6: oklch(0.50 0.12 60);
+  --key-octave-7: oklch(0.50 0.12 25);
+  --key-octave-8: oklch(0.50 0.12 340);
 
   /* ── Glow shadows */
   --glow-accent:  0 0 6px rgba(92, 72, 180, 0.15);

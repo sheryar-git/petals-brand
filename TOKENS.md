@@ -349,9 +349,35 @@ Purple is the brand. The others are system indicators.
 
 Brand surfaces (website, socials, ads) show `--accent` only.
 
+### Quasar AFX accents
+
+Two stage indicators for Quasar's sound stages. Live on instrument surfaces only.
+
+| Token | Nightshade | Kinari | Role |
+|-------|------------|--------|------|
+| `--crystal-glow` | `oklch(0.93 0.05 215)` | `oklch(0.55 0.08 215)` | CRYSTAL macro and DSP stage indicator. Icy cyan, harmonizes with `--accent`. |
+| `--grit-glow` | `oklch(0.74 0.13 50)` | `oklch(0.55 0.14 35)` | GRIT macro and DSP stage indicator. Warm amber, complementary to `--accent`. |
+
+### Quasar keymap octave tints
+
+Eight values for Quasar's 128-key snapshot store. Each MIDI octave (12 keys) cycles to the next tint, so a programmed dot's color encodes which octave it sits in.
+
+The set is one full hue rotation at flat lightness and chroma (colored pencils, same sharpness). Anchored at `--accent`'s purple (290) and closing back toward it (340), so the cycle never reads as a rainbow stripe. At 4x4px the eye distinguishes hue contrast even on flat lightness.
+
+| Token | Nightshade | Kinari | Hue |
+|-------|------------|--------|-----|
+| `--key-octave-1` | `oklch(0.62 0.10 290)` | `oklch(0.50 0.12 290)` | wisteria |
+| `--key-octave-2` | `oklch(0.62 0.10 245)` | `oklch(0.50 0.12 245)` | indigo |
+| `--key-octave-3` | `oklch(0.62 0.10 200)` | `oklch(0.50 0.12 200)` | steel |
+| `--key-octave-4` | `oklch(0.62 0.10 155)` | `oklch(0.50 0.12 155)` | jade |
+| `--key-octave-5` | `oklch(0.62 0.10 110)` | `oklch(0.50 0.12 110)` | leaf |
+| `--key-octave-6` | `oklch(0.62 0.10 60)`  | `oklch(0.50 0.12 60)`  | cream |
+| `--key-octave-7` | `oklch(0.62 0.10 25)`  | `oklch(0.50 0.12 25)`  | ember |
+| `--key-octave-8` | `oklch(0.62 0.10 340)` | `oklch(0.50 0.12 340)` | mauve |
+
 ### CTA + product accents
 
-Different category from the 5 system accents — these mean money, not signal flow. They live on the website, not inside instruments.
+Different category from the 5 system accents (these mean money, not signal flow). They live on the website, not inside instruments.
 
 | Token | Color | Role |
 |-------|-------|------|
