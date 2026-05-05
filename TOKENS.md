@@ -190,7 +190,7 @@ The Kinari palette. Cream paper, ink, pigments. The instrument feels printed, no
 
 ### Website surface — `:root[data-surface="website"]`
 
-The "gallery wall." Cooler and flatter than Nightshade. The wall the work hangs on, not the work itself. Applied via `data-surface="website"` on `<html>` in the website's `Base.astro`. Combines with `data-dir="light"` for the light-mode website (cascade order matters; specificity is equal).
+The "gallery wall." Cooler and flatter than Nightshade. The wall the work hangs on, not the work itself. Applied via `data-surface="website"` on `<html>` in the website's `Base.astro`. When combined with `data-dir="light"`, the light-mode block wins because it sits later in source order (specificity is equal). Don't reorder.
 
 Overrides surface / border / text only. Accents inherit from Nightshade so the brand purple stays the same on every surface.
 

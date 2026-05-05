@@ -521,6 +521,40 @@
 
 
 /* ──────────────────────────────────────────────────────────
+   WEBSITE SURFACE — the gallery wall
+   ──────────────────────────────────────────────────────────
+   Cooler and flatter than Nightshade. The wall the work hangs on,
+   not the instrument itself.
+
+   Applied via data-surface="website" on <html> in Base.astro.
+   Combines with data-dir="light" for the light-mode website
+   (later [data-dir] block wins by source order; specificity equal).
+
+   Overrides surface / border / text only. Accents inherit from
+   Nightshade so the brand purple stays the same on every surface.
+
+   Order matters: this block sits BEFORE [data-dir="light"] so that
+   light-mode tokens win the cascade when both attributes are set.
+   ────────────────────────────────────────────────────────── */
+
+:root[data-surface="website"] {
+  --bg:           #0C0B10;
+  --surface:      #14131A;
+  --surface-up:   #1C1B22;
+  --groove:       #08080C;
+  --groove-edge:  #201F28;
+  --control:      #1C1B24;
+  --control-edge: #28272E;
+  --border-light: #28272E;
+  --border:       #1C1B22;
+  --border-dim:   #121118;
+  --text:         #C8C6D0;
+  --text-dim:     #7C7A88;
+  --text-muted:   #4C4A58;
+}
+
+
+/* ──────────────────────────────────────────────────────────
    LIGHT MODE — Kinari
    ──────────────────────────────────────────────────────────
    Cream paper, ink, pigments. The instrument feels printed,
@@ -632,37 +666,6 @@
   --grain-wing-opacity:    0.20;
   --grain-control-opacity: 0.08;
   --grain-display-opacity: 0.04;
-}
-
-
-/* ──────────────────────────────────────────────────────────
-   WEBSITE SURFACE — the gallery wall
-   ──────────────────────────────────────────────────────────
-   Cooler and flatter than Nightshade. The wall the work hangs on,
-   not the instrument itself.
-
-   Applied via data-surface="website" on <html> in Base.astro.
-   Combines with data-dir="light" for the light-mode website
-   (later [data-dir] block wins by source order; specificity equal).
-
-   Overrides surface / border / text only. Accents inherit from
-   Nightshade so the brand purple stays the same on every surface.
-   ────────────────────────────────────────────────────────── */
-
-:root[data-surface="website"] {
-  --bg:           #0C0B10;
-  --surface:      #14131A;
-  --surface-up:   #1C1B22;
-  --groove:       #08080C;
-  --groove-edge:  #201F28;
-  --control:      #1C1B24;
-  --control-edge: #28272E;
-  --border-light: #28272E;
-  --border:       #1C1B22;
-  --border-dim:   #121118;
-  --text:         #C8C6D0;
-  --text-dim:     #7C7A88;
-  --text-muted:   #4C4A58;
 }
 
 
