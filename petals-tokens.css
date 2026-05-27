@@ -151,6 +151,25 @@
   --key-octave-7: oklch(0.62 0.10 25);
   --key-octave-8: oklch(0.62 0.10 340);
 
+  /* ── Harmonic colors — circle of fifths key progression
+   * Maps musical keys to colors following Scriabin's theory and petals aesthetic.
+   * 12 colors for: C→G→D→A→E→B→F#→Db→Ab→Eb→Bb→F→C progression.
+   * Base parameters: oklch(L C H) where L=lightness, C=chroma.
+   * Mode sensitivity via chroma: major=0.10, minor=0.08, diminished=0.06.
+   */
+  --key-c:    oklch(0.62 0.10 15);   /* Ember-Rose — C major (root) */
+  --key-g:    oklch(0.62 0.10 290);  /* Wisteria — G major (brand anchor) */
+  --key-d:    oklch(0.62 0.08 270);  /* Violet — D minor (muted) */
+  --key-a:    oklch(0.62 0.08 245);  /* Indigo — A minor */
+  --key-e:    oklch(0.62 0.08 220);  /* Slate — E minor */
+  --key-b:    oklch(0.62 0.06 190);  /* Steel-Dim — B diminished (most muted) */
+  --key-fs:   oklch(0.62 0.10 155);  /* Jade — F# major (Scriabin's blue) */
+  --key-db:   oklch(0.62 0.10 135);  /* Mint — Db major */
+  --key-ab:   oklch(0.62 0.10 110);  /* Leaf — Ab major */
+  --key-eb:   oklch(0.62 0.10 85);   /* Lime — Eb major */
+  --key-bb:   oklch(0.62 0.10 60);   /* Cream — Bb major */
+  --key-f:    oklch(0.62 0.10 25);   /* Ember — F major */
+
   /* ── Interaction
    * White glow = "you are touching this." Purple stays for brand + mod.
    */
