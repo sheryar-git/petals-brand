@@ -334,6 +334,7 @@ Semantic state opacity. Animation keyframes use raw values — they're points on
 | `--alpha-hover` | 0.60 | Hover, soft emphasis |
 | `--alpha-emphasis` | 0.80 | Primary emphasis |
 | `--alpha-strong` | 0.90 | Near-solid |
+| `--node-handle-dim` | 0.30 | Draggable handle hidden until its display is hovered, then a faint affordance (EnvCurve segment-bow handles). Brightens to `--alpha-strong` on its own hover. |
 
 ## Accent roles
 

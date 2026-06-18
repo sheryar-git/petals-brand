@@ -514,6 +514,12 @@
   --alpha-emphasis: 0.80;   /* primary emphasis */
   --alpha-strong:   0.90;   /* near-solid */
 
+  /* Draggable handle that hides until its parent display is hovered, then
+   * surfaces as a faint affordance (e.g. the EnvCurve segment-bow handles).
+   * Same weight as --alpha-disabled but semantically distinct: a discoverable
+   * control, not a disabled one. Brightens to --alpha-strong on its own hover. */
+  --node-handle-dim: 0.30;
+
   /* ── Optical offsets
    * Sub-grid values for the rare cases where the 5px grid hurts the eye.
    * Use sparingly. Always comment the optical reason.
