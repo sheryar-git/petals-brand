@@ -250,8 +250,15 @@ Overrides surface / border / text only. Accents inherit from Nightshade so the b
 | `--accent3` | #C8688A | Rose |
 | `--accent4` | #8CB0D4 | Powder blue |
 | `--accent5` | #3C9058 | Sage |
+| `--accent-env1` | #D0A850 | Gold — mod source ENV 1 |
+| `--accent-env2` | #58C0A0 | Jade — mod source ENV 2 |
 
 Each has a `-dim` variant. Some have `-glow`.
+
+Mod-source hues: the four modulation sources read as four distinct colors
+(LFO1 purple `--accent`, LFO2 blue `--accent2`, ENV1 gold `--accent-env1`,
+ENV2 jade `--accent-env2`). The envelope graph colors the active env with the
+matching ENV hue so "ENV 1" reads the same on the graph and the mod bars.
 
 `--danger`: #ff4444
 

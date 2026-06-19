@@ -77,6 +77,26 @@
   --glow-white-med:  rgba(232, 228, 240, 0.2);
   --glow-white-hot:  rgba(232, 228, 240, 0.25);
 
+  /* ── Mod-source signal hues
+   * The modulation system has four sources and each must read as a
+   * distinct color on the mod bars + dials AND match its own envelope
+   * graph color. LFO1/LFO2 borrow the brand accents; the two envelopes
+   * get their own hues so all four read apart at a glance.
+   *
+   *   mod source   color    hue   token
+   *   LFO 1        purple   265   --accent
+   *   LFO 2        blue     205   --accent2
+   *   ENV 1        gold      75   --accent-env1   (amber, the envelope's tint family)
+   *   ENV 2        jade     160   --accent-env2
+   *
+   * Spaced ~45-90 deg apart around the wheel, same mid-lightness /
+   * moderate-chroma energy band as the accents. Not garish; reads on --bg.
+   */
+  --accent-env1:     #D0A850;
+  --accent-env1-dim: #A88838;
+  --accent-env2:     #58C0A0;
+  --accent-env2-dim: #448C78;
+
   /* ── Commerce accents (brand surfaces only)
    * Different category from the 5 system accents — these mean money,
    * not signal flow. They live on the website, not inside instruments.
@@ -634,6 +654,12 @@
   --accent5:     #5C8038;
   --accent5-dim: #446828;
   --accent5-glow:rgba(92, 128, 56, 0.08);
+
+  /* ── Mod-source signal hues — deepened to read on cream */
+  --accent-env1:     #A07818;   /* gold — ENV 1 */
+  --accent-env1-dim: #7C5C10;
+  --accent-env2:     #2C8868;   /* jade — ENV 2 */
+  --accent-env2-dim: #206850;
 
   /* ── Active — pressed ink, no glow */
   --glow-white:     #2A2420;
