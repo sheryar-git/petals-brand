@@ -25,104 +25,108 @@
 
 :root {
 
-  /* ── Surfaces — Nightshade (deadly-nightshade indigo-black)
-   * A violet-leaning field, not dead grey. Hue 282 / chroma 0.022 in OKLCH
-   * carries the belladonna undertone that harmonizes with the purple anchor.
-   * Panels lift above the body. Depth without black, life without glare.
+  /* ── Surfaces — Nightshade (warm 墨 sumi-ink near-black)
+   * A warm-neutral ink field, hue 70 / chroma 0.008 in OKLCH — confident,
+   * calm, the OPPOSITE of cold cyberpunk violet. One warm ink body, panels
+   * lifting bg → panel → raised. Depth without black, warmth without glare.
    * These STATIC defaults match themeEngine.js's Nightshade output exactly —
    * the JS regenerates them at runtime, the CSS is the first-paint truth.
    */
-  --bg:          #0b0b15;
-  --surface:     #151621;
-  --surface-up:  #21222d;
-  --surface-head:#070711;
-  --surface-base:#070711;
+  --bg:          #0e0c09;
+  --surface:     #1a1713;
+  --surface-up:  #25221f;
+  --surface-head:#0a0805;
+  --surface-base:#0a0805;
 
   /* ── Borders — directional light. Top catches it, bottom recedes. */
-  --border-light: #363743;
-  --border:       #21222d;
-  --border-dim:   #0f0f1a;
+  --border-light: #3b3734;
+  --border:       #272320;
+  --border-dim:   #14110e;
 
   /* ── Controls
    * Groove: where sliders ride and knobs turn. Recessed.
    * Control: button face, knob disk. Raised.
    */
-  --groove:       #070711;
-  --groove-edge:  #242531;
-  --control:      #21222d;
-  --control-edge: #31323e;
+  --groove:       #0b0906;
+  --groove-edge:  #292622;
+  --control:      #272320;
+  --control-edge: #36322e;
 
-  /* ── Text — four-tier ramp. Warm silver primary (h70) for life against the
-   * cool field; the muted tier stays cool (h275) as the "receded chrome" voice.
+  /* ── Text — four-tier ramp. Bone / ivory in ONE warm temperature (h75)
+   * that AGREES with the warm sumi surfaces — no warm-on-cool mud. The
+   * chromatic-adaptation rule: neutral text leans toward the field hue.
    *   --text        primary  param names, hero values, active labels
-   *   --text-value  value    stateless value words at rest (warm ivory)
+   *   --text-value  value    stateless value words at rest (ivory)
    *   --text-dim    second   secondary info, units, idle controls
-   *   --text-muted  chrome   7px section/param labels, inactive (cool steel)
+   *   --text-muted  chrome   7px section/param labels, inactive (dim bone)
    */
-  --text:        #d6d0c9;
-  --text-value:  #aba39a;
-  --text-dim:    #7e7974;
-  --text-muted:  #61636a;
+  --text:        #e0ddda;
+  --text-value:  #b3b1ad;
+  --text-dim:    #888682;
+  --text-muted:  #65635f;
 
-  /* ── Accents — the GUNDAM set (cool mecha-armour family)
-   * Purple is the FIXED anchor (#7868D4 ≈ oklch 0.585 0.16 287) and the
-   * focal point: highest chroma, the brand. The others harmonize around it
-   * in OKLCH with an INTENTIONAL focal hierarchy — not flattened to one
-   * lightness (that reads drab). Each accent earns its own L + chroma so it
-   * reads as itself while purple still dominates by chroma weight.
+  /* ── Accents — the NATURAL-DYE family (traditional Japanese pigments)
+   * Color is reserved for MEANING — mod sources + section identity. These
+   * are restrained natural dyes on washi/ink, NOT neon. Purple is the FIXED
+   * anchor (#7868D4 ≈ oklch 0.585 0.16 287) and the single place purple
+   * lives — it is NOT the universal active/interaction color. Each dye earns
+   * its own L + chroma; chroma is low-to-mid throughout (dyes, not LEDs).
    *
-   *   accent   purple   brand primary, LFO1, active, focus   (anchor)
-   *   accent2  blue     LFO2, the cool complement
-   *   accent3  rose     ENV2, floral, danger neighbour
-   *   accent4  jade     ENV1 + lock + info (deep cool green)
-   *   accent5  steel    MTS-ESP source + Motion 2 (quietest)
+   *   accent   murasaki/藤   purple    brand anchor · LFO 1
+   *   accent2  matcha/若竹   green     LFO 2  (bamboo green)
+   *   accent3  beni/紅·柿    madder    ENV 2  (safflower/persimmon)
+   *   accent4  hanada/縹     indigo    lock + Motion 1 (plant indigo)
+   *   accent5  nezumi/藍鼠   grey-indigo MTS + Motion 2 (quietest)
    *
-   * No gold (folded into jade for lock), no sage-green-as-accent5
-   * (steel-blue now). One green in the system: jade.
+   * ENV 1 = kihada/黄檗 ochre (--accent-env1, below) — green moved OFF env
+   * onto LFO 2 per Sher. Greens: one, matcha (LFO 2).
    */
-  --accent:      #7d6fd8;
-  --accent-dim:  #59538f;
-  --accent-glow: rgba(125, 111, 216, 0.12);
-  --accent2:     #368cc6;
-  --accent2-dim: #366486;
-  --accent2-glow:rgba(54, 140, 198, 0.12);
-  --accent3:     #c26169;
-  --accent3-dim: #844b4f;
-  --accent4:     #409f76;
-  --accent4-dim: #3e7159;
-  --accent4-glow:rgba(64, 159, 118, 0.08);
-  --accent5:     #5a7ca1;
-  --accent5-dim: #42566c;
-  --accent5-glow:rgba(90, 124, 161, 0.08);
+  --accent:      #887be2;
+  --accent-dim:  #635d99;
+  --accent-glow: rgba(136, 123, 226, 0.12);
+  --accent2:     #7cae76;
+  --accent2-dim: #648160;
+  --accent2-glow:rgba(124, 174, 118, 0.10);
+  --accent3:     #d67064;
+  --accent3-dim: #955951;
+  --accent4:     #5897d2;
+  --accent4-dim: #4b6f92;
+  --accent4-glow:rgba(88, 151, 210, 0.08);
+  --accent5:     #788fa7;
+  --accent5-dim: #5a6876;
+  --accent5-glow:rgba(120, 143, 167, 0.06);
 
-  /* ── Glow / active — purple phosphor, not white.
-   * Chroma does the work: oklch 0.70 0.12 287 reads as "clearly purple,
-   * touching this" against the neutral text ramp. The categorical chroma
-   * jump (text C≈0.012 → active C 0.12, ~10×) is the signal, not lightness.
+  /* ── Glow / active — NEUTRAL bone/ivory, NOT purple.
+   * "You are touching this" = a bright bone luminance lift, not a colored
+   * glow. The categorical signal is LUMINANCE (text 0.90 → active 0.965),
+   * not hue. Chrome and clickable controls never turn purple — that restraint
+   * is the Japanese-Scandinavian feeling. Purple is held for the brand
+   * anchor + the murasaki mod source only.
    */
-  --glow-white:     #9a92e5;
-  --glow-white-soft: rgba(154, 146, 229, 0.06);
-  --glow-white-med:  rgba(154, 146, 229, 0.10);
-  --glow-white-hot:  rgba(154, 146, 229, 0.14);
+  --glow-white:     #f5f3f0;
+  --glow-white-soft: rgba(245, 243, 240, 0.06);
+  --glow-white-med:  rgba(245, 243, 240, 0.10);
+  --glow-white-hot:  rgba(245, 243, 240, 0.14);
 
   /* ── Mod-source signal hues
-   * The modulation system has four sources. Each reads as a distinct color
-   * on the mod bars + dials AND matches its own envelope/LFO graph color.
-   * LFO1/LFO2 borrow the brand accents; the two envelopes alias the
-   * jade/rose accents so all four read apart at a glance.
+   * Six modulation sources, each a distinct natural dye on the mod bars +
+   * dials, matching its own envelope/LFO/motion graph color. Color = which
+   * source (MEANING).
    *
-   *   mod source   color    token          = accent
-   *   LFO 1        purple   --accent        anchor
-   *   LFO 2        blue     --accent2
-   *   ENV 1        jade     --accent-env1   = accent4 (also lock)
-   *   ENV 2        rose     --accent-env2   = accent3
+   *   mod source   dye               token          = accent
+   *   LFO 1        murasaki purple   --accent        anchor
+   *   LFO 2        matcha green      --accent2
+   *   ENV 1        kihada ochre      --accent-env1
+   *   ENV 2        beni madder       --accent-env2   = accent3
+   *   Motion 1     hanada indigo     --accent4       (= lock)
+   *   Motion 2     nezumi grey       --accent5       (quietest)
    *
-   * Same OKLCH energy band as the accents — lush, not garish, reads on --bg.
+   * Same OKLCH energy band as the accents — natural, not garish, reads on --bg.
    */
-  --accent-env1:     #409f76;
-  --accent-env1-dim: #3e7159;
-  --accent-env2:     #c26169;
-  --accent-env2-dim: #844b4f;
+  --accent-env1:     #caa764;
+  --accent-env1-dim: #97825c;
+  --accent-env2:     #d67064;
+  --accent-env2-dim: #955951;
 
   /* ── Commerce accents (brand surfaces only)
    * Different category from the 5 system accents — these mean money,
@@ -137,25 +141,27 @@
   --product-folium-cta: #c9a86c;
 
   /* ── Section tints — signal-path color coding
-   * Each module gets its own header color. All sit in the same energy
-   * band (~45% lightness, ~25% saturation) — colored pencils, same
-   * sharpness. The arc follows the signal:
+   * Each module gets its own header color (the tints Sher loves). All sit in
+   * one energy band — colored pencils, same sharpness — and the hues are
+   * harmonized to the natural-dye family so headers and mod-source colors
+   * read as one pigment world. Restrained chroma: these tint a header strip,
+   * they do not shout.
    *
-   *   sage → purple → gold → rose → blue → neutral
-   *   input  osc      env    filter rev    output
+   *   matcha → murasaki → kihada → beni → hanada → nezumi
+   *   input    osc        env      filter reverb   output
    */
-  --tint-input:       #5b8057;   /* moss green */
-  --tint-oscillator:  #716e9f;   /* wisteria */
-  --tint-envelope:    #82743f;   /* amber */
-  --tint-seedling:    #53815d;   /* spring green */
-  --tint-scope:       #6c70a0;   /* lavender */
-  --tint-sequencer:   #96627b;   /* dusty rose */
-  --tint-filter:      #9b6269;   /* rose */
-  --tint-reverb:      #497a9c;   /* indigo */
-  --tint-output:      #5c75a1;   /* steel */
-  --tint-morph:       #6572a1;   /* blue-violet */
-  --tint-master:      #5c75a1;   /* steel */
-  --tint-eq:          #497a9c;   /* indigo (FX chain) */
+  --tint-input:       #668463;   /* wakatake green */
+  --tint-oscillator:  #77759d;   /* fuji wisteria */
+  --tint-envelope:    #8c7751;   /* kihada ochre */
+  --tint-seedling:    #618568;   /* young leaf */
+  --tint-scope:       #6b799f;   /* hanada-violet */
+  --tint-sequencer:   #9b6c6d;   /* beni dust */
+  --tint-filter:      #9b6d66;   /* persimmon */
+  --tint-reverb:      #5e7e9d;   /* hanada indigo */
+  --tint-output:      #5f7d9d;   /* nezumi-indigo */
+  --tint-morph:       #77759d;   /* fuji wisteria */
+  --tint-master:      #5f7d9d;   /* nezumi-indigo */
+  --tint-eq:          #5e7e9d;   /* hanada indigo (FX chain) */
 
   /* ── Quasar AFX accents
    * Two stage indicators for Quasar's CRYSTAL (high-Q resonant ring) and
@@ -217,18 +223,20 @@
   --key-bb:   oklch(0.62 0.10 60);   /* Cream — Bb major */
   --key-f:    oklch(0.62 0.10 25);   /* Ember — F major */
 
-  /* ── Interaction
-   * White glow = "you are touching this." Purple stays for brand + mod.
+  /* ── Interaction — NEUTRAL.
+   * Bone-luminance lift = "you are touching this." Clickable controls
+   * brighten neutrally; they never turn purple. Purple is held strictly for
+   * the brand anchor + the murasaki mod source.
    */
   --active:      var(--glow-white);
 
   --danger:      #c54d49;
 
-  /* ── Glow shadows */
-  --glow-accent:  0 0 4px rgba(125, 111, 216, 0.12);
-  --glow-accent2: 0 0 4px rgba(54, 140, 198, 0.10);
-  --glow-accent4: 0 0 4px rgba(64, 159, 118, 0.08);
-  --glow-accent5: 0 0 4px rgba(90, 124, 161, 0.08);
+  /* ── Glow shadows — per-dye halation */
+  --glow-accent:  0 0 4px rgba(136, 123, 226, 0.12);
+  --glow-accent2: 0 0 4px rgba(124, 174, 118, 0.08);
+  --glow-accent4: 0 0 4px rgba(88, 151, 210, 0.08);
+  --glow-accent5: 0 0 4px rgba(120, 143, 167, 0.06);
 
   /* ── Type — UI scale (inside instruments)
    * 10px ceiling, 7px floor. Line-heights snap to the 5px grid.
@@ -594,13 +602,14 @@
    *   state      token              meaning
    *   idle       --state-idle       at rest, present but quiet (chrome label)
    *   hover      --state-hover      pointer is over it — affordance lift
-   *   active     --state-active     engaged / on / playing — the purple voice
+   *   active     --state-active     engaged / on / playing — NEUTRAL bone lift
    *   selected   --state-selected   chosen of a set (= active)
    *   disabled   --state-disabled   not available (alpha, not a hue)
-   *   locked     --state-locked     constrained to a scale — jade
+   *   locked     --state-locked     constrained to a scale — hanada indigo
    *
-   * Bare-text controls ride the brightness ladder idle→hover→active:
-   *   --text-muted → --text → --active   (cool chrome lifts to warm to purple)
+   * Bare-text controls ride a NEUTRAL brightness ladder idle→hover→active:
+   *   --text-muted → --text → --active   (muted bone → bone → bright bone)
+   * NO color on the ladder — color is reserved for MEANING (source/section).
    * Boxed controls add a surface: groove → control on active.
    * The state tokens below are the canonical aliases; components reference
    * THESE, and themes only need to retint the underlying accents/text.
@@ -717,62 +726,63 @@
   --text-dim:    #605955;
   --text-muted:  #69625d;
 
-  /* ── Accents — deep botanical inks on cream. Same GUNDAM hues as
-   * Nightshade, deepened (lower L) to read on the kraft field. Purple
-   * stays the focal anchor; rose (beni) carries the most chroma after it. */
+  /* ── Accents — natural dyes on cream. Same pigment family as Nightshade,
+   * deepened (lower L) to read on the kraft field. Purple holds the brand
+   * anchor; chroma is restrained throughout (dyes, not LEDs). */
 
-  /* wisteria — fuji-iro (anchor) */
-  --accent:      #5a48ad;
-  --accent-dim:  #3f3771;
-  --accent-glow: rgba(90, 72, 173, 0.12);
+  /* murasaki — fuji-iro wisteria (anchor · LFO 1) */
+  --accent:      #594ba5;
+  --accent-dim:  #3f386c;
+  --accent-glow: rgba(89, 75, 165, 0.12);
 
-  /* indigo — ai */
-  --accent2:     #0a5a9a;
-  --accent2-dim: #193f64;
-  --accent2-glow:rgba(10, 90, 154, 0.12);
+  /* matcha — wakatake bamboo green (LFO 2) */
+  --accent2:     #43703e;
+  --accent2-dim: #365033;
+  --accent2-glow:rgba(67, 112, 62, 0.10);
 
-  /* beni — safflower rouge (ENV2) */
-  --accent3:     #9f3540;
-  --accent3-dim: #6a2e32;
+  /* beni — safflower / persimmon (ENV 2) */
+  --accent3:     #9d3d34;
+  --accent3-dim: #6a322c;
 
-  /* jade — tokiwa evergreen (ENV1 + lock) */
-  --accent4:     #0b764d;
-  --accent4-dim: #21533b;
-  --accent4-glow:rgba(11, 118, 77, 0.08);
+  /* hanada — plant indigo (lock + Motion 1) */
+  --accent4:     #255e90;
+  --accent4-dim: #23425f;
+  --accent4-glow:rgba(37, 94, 144, 0.08);
 
-  /* steel — koke on warm stone (MTS + Motion2) */
-  --accent5:     #385e83;
-  --accent5-dim: #2c4258;
-  --accent5-glow:rgba(56, 94, 131, 0.08);
+  /* nezumi — mouse-grey indigo (MTS + Motion 2, quietest) */
+  --accent5:     #4a5d71;
+  --accent5-dim: #36414d;
+  --accent5-glow:rgba(74, 93, 113, 0.06);
 
-  /* ── Mod-source signal hues — env1 = jade, env2 = beni rose */
-  --accent-env1:     #0b764d;   /* jade — ENV 1 */
-  --accent-env1-dim: #21533b;
-  --accent-env2:     #9f3540;   /* rose — ENV 2 */
-  --accent-env2-dim: #6a2e32;
+  /* ── Mod-source signal hues — env1 = kihada ochre, env2 = beni madder */
+  --accent-env1:     #89692a;   /* kihada ochre — ENV 1 */
+  --accent-env1-dim: #62502d;
+  --accent-env2:     #9d3d34;   /* beni madder — ENV 2 */
+  --accent-env2-dim: #6a322c;
 
-  /* ── Active — pressed wax seal with a purple kiss (not pure ink) */
-  --glow-white:     #49435e;
-  --glow-white-soft: rgba(73, 67, 94, 0.06);
-  --glow-white-med:  rgba(73, 67, 94, 0.10);
-  --glow-white-hot:  rgba(73, 67, 94, 0.18);
-  --active:      #49435e;
+  /* ── Active — NEUTRAL dark walnut ink (inverted axis). On cream, "engaged"
+   * darkens toward the ink floor; it never turns purple. */
+  --glow-white:     #1d1a18;
+  --glow-white-soft: rgba(29, 26, 24, 0.06);
+  --glow-white-med:  rgba(29, 26, 24, 0.10);
+  --glow-white-hot:  rgba(29, 26, 24, 0.16);
+  --active:      #1d1a18;
 
   --danger:      #aa3333;
 
-  /* ── Section tints — same hues as dark theme, transposed deeper for cream */
-  --tint-input:       #486f44;   /* moss */
-  --tint-oscillator:  #605c8f;   /* wisteria */
-  --tint-envelope:    #726328;   /* amber */
-  --tint-seedling:    #3f704b;   /* spring */
-  --tint-scope:       #5a5e90;   /* violet */
-  --tint-sequencer:   #85506a;   /* blush */
-  --tint-filter:      #8b4f57;   /* rouge */
-  --tint-reverb:      #34698c;   /* indigo */
-  --tint-output:      #4a6391;   /* steel */
-  --tint-morph:       #536091;   /* blue-violet */
-  --tint-master:      #4a6391;   /* steel */
-  --tint-eq:          #34698c;   /* indigo (FX chain) */
+  /* ── Section tints — natural-dye hues, transposed deeper for cream */
+  --tint-input:       #4d6d49;   /* wakatake green */
+  --tint-oscillator:  #605d88;   /* fuji wisteria */
+  --tint-envelope:    #775f34;   /* kihada ochre */
+  --tint-seedling:    #466e4e;   /* young leaf */
+  --tint-scope:       #52628b;   /* hanada-violet */
+  --tint-sequencer:   #865354;   /* beni dust */
+  --tint-filter:      #86544d;   /* persimmon */
+  --tint-reverb:      #436788;   /* hanada indigo */
+  --tint-output:      #456689;   /* nezumi-indigo */
+  --tint-morph:       #605d88;   /* fuji wisteria */
+  --tint-master:      #456689;   /* nezumi-indigo */
+  --tint-eq:          #436788;   /* hanada indigo (FX chain) */
 
   /* ── Quasar AFX accents — pigment-side
    * Crystal becomes a deeper teal-blue (cool ink). Grit deepens to a
