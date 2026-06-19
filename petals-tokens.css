@@ -25,77 +25,104 @@
 
 :root {
 
-  /* ── Surfaces — Nightshade
-   * Violet dusk. Panels lift above the body. Depth without black.
+  /* ── Surfaces — Nightshade (deadly-nightshade indigo-black)
+   * A violet-leaning field, not dead grey. Hue 282 / chroma 0.022 in OKLCH
+   * carries the belladonna undertone that harmonizes with the purple anchor.
+   * Panels lift above the body. Depth without black, life without glare.
+   * These STATIC defaults match themeEngine.js's Nightshade output exactly —
+   * the JS regenerates them at runtime, the CSS is the first-paint truth.
    */
-  --bg:          #141224;
-  --surface:     #1e1c30;
-  --surface-up:  #262438;
+  --bg:          #0b0b15;
+  --surface:     #151621;
+  --surface-up:  #21222d;
+  --surface-head:#070711;
+  --surface-base:#070711;
 
   /* ── Borders — directional light. Top catches it, bottom recedes. */
-  --border-light: #3c3652;
-  --border:       #302c44;
-  --border-dim:   #201c30;
+  --border-light: #363743;
+  --border:       #21222d;
+  --border-dim:   #0f0f1a;
 
   /* ── Controls
    * Groove: where sliders ride and knobs turn. Recessed.
    * Control: button face, knob disk. Raised.
    */
-  --groove:       #161428;
-  --groove-edge:  #2a2640;
-  --control:      #2a283e;
-  --control-edge: #34304a;
+  --groove:       #070711;
+  --groove-edge:  #242531;
+  --control:      #21222d;
+  --control-edge: #31323e;
 
-  /* ── Text */
-  --text:        #c0c0d4;
-  --text-dim:    #8484a0;
-  --text-muted:  #5c5c78;
-
-  /* ── Accents
-   *   accent   purple    brand primary. LFO1, active states, focus.
-   *   accent2  blue      LFO2, the cool complement.
-   *   accent3  rose      danger, destructive actions.
-   *   accent4  gold      lock + info states.
-   *   accent5  sage      MTS-ESP source, the green light.
+  /* ── Text — four-tier ramp. Warm silver primary (h70) for life against the
+   * cool field; the muted tier stays cool (h275) as the "receded chrome" voice.
+   *   --text        primary  param names, hero values, active labels
+   *   --text-value  value    stateless value words at rest (warm ivory)
+   *   --text-dim    second   secondary info, units, idle controls
+   *   --text-muted  chrome   7px section/param labels, inactive (cool steel)
    */
-  --accent:      #7868D4;
-  --accent-dim:  #6050B0;
-  --accent-glow: rgba(120, 104, 212, 0.12);
-  --accent2:     #70A8D8;
-  --accent2-dim: #5088B0;
-  --accent2-glow:rgba(112, 168, 216, 0.12);
-  --accent3:     #D07080;
-  --accent3-dim: #A85868;
-  --accent4:     #C8A848;
-  --accent4-dim: #A08838;
-  --accent4-glow:rgba(200, 168, 72, 0.10);
-  --accent5:     #78A858;
-  --accent5-dim: #588040;
-  --accent5-glow:rgba(120, 168, 88, 0.08);
-  --glow-white:     #e8e4f0;
-  --glow-white-soft: rgba(232, 228, 240, 0.15);
-  --glow-white-med:  rgba(232, 228, 240, 0.2);
-  --glow-white-hot:  rgba(232, 228, 240, 0.25);
+  --text:        #d6d0c9;
+  --text-value:  #aba39a;
+  --text-dim:    #7e7974;
+  --text-muted:  #61636a;
+
+  /* ── Accents — the GUNDAM set (cool mecha-armour family)
+   * Purple is the FIXED anchor (#7868D4 ≈ oklch 0.585 0.16 287) and the
+   * focal point: highest chroma, the brand. The others harmonize around it
+   * in OKLCH with an INTENTIONAL focal hierarchy — not flattened to one
+   * lightness (that reads drab). Each accent earns its own L + chroma so it
+   * reads as itself while purple still dominates by chroma weight.
+   *
+   *   accent   purple   brand primary, LFO1, active, focus   (anchor)
+   *   accent2  blue     LFO2, the cool complement
+   *   accent3  rose     ENV2, floral, danger neighbour
+   *   accent4  jade     ENV1 + lock + info (deep cool green)
+   *   accent5  steel    MTS-ESP source + Motion 2 (quietest)
+   *
+   * No gold (folded into jade for lock), no sage-green-as-accent5
+   * (steel-blue now). One green in the system: jade.
+   */
+  --accent:      #7d6fd8;
+  --accent-dim:  #59538f;
+  --accent-glow: rgba(125, 111, 216, 0.12);
+  --accent2:     #368cc6;
+  --accent2-dim: #366486;
+  --accent2-glow:rgba(54, 140, 198, 0.12);
+  --accent3:     #c26169;
+  --accent3-dim: #844b4f;
+  --accent4:     #409f76;
+  --accent4-dim: #3e7159;
+  --accent4-glow:rgba(64, 159, 118, 0.08);
+  --accent5:     #5a7ca1;
+  --accent5-dim: #42566c;
+  --accent5-glow:rgba(90, 124, 161, 0.08);
+
+  /* ── Glow / active — purple phosphor, not white.
+   * Chroma does the work: oklch 0.70 0.12 287 reads as "clearly purple,
+   * touching this" against the neutral text ramp. The categorical chroma
+   * jump (text C≈0.012 → active C 0.12, ~10×) is the signal, not lightness.
+   */
+  --glow-white:     #9a92e5;
+  --glow-white-soft: rgba(154, 146, 229, 0.06);
+  --glow-white-med:  rgba(154, 146, 229, 0.10);
+  --glow-white-hot:  rgba(154, 146, 229, 0.14);
 
   /* ── Mod-source signal hues
-   * The modulation system has four sources and each must read as a
-   * distinct color on the mod bars + dials AND match its own envelope
-   * graph color. LFO1/LFO2 borrow the brand accents; the two envelopes
-   * get their own hues so all four read apart at a glance.
+   * The modulation system has four sources. Each reads as a distinct color
+   * on the mod bars + dials AND matches its own envelope/LFO graph color.
+   * LFO1/LFO2 borrow the brand accents; the two envelopes alias the
+   * jade/rose accents so all four read apart at a glance.
    *
-   *   mod source   color    hue   token
-   *   LFO 1        purple   265   --accent
-   *   LFO 2        blue     205   --accent2
-   *   ENV 1        gold      75   --accent-env1   (amber, the envelope's tint family)
-   *   ENV 2        jade     160   --accent-env2
+   *   mod source   color    token          = accent
+   *   LFO 1        purple   --accent        anchor
+   *   LFO 2        blue     --accent2
+   *   ENV 1        jade     --accent-env1   = accent4 (also lock)
+   *   ENV 2        rose     --accent-env2   = accent3
    *
-   * Spaced ~45-90 deg apart around the wheel, same mid-lightness /
-   * moderate-chroma energy band as the accents. Not garish; reads on --bg.
+   * Same OKLCH energy band as the accents — lush, not garish, reads on --bg.
    */
-  --accent-env1:     #D0A850;
-  --accent-env1-dim: #A88838;
-  --accent-env2:     #58C0A0;
-  --accent-env2-dim: #448C78;
+  --accent-env1:     #409f76;
+  --accent-env1-dim: #3e7159;
+  --accent-env2:     #c26169;
+  --accent-env2-dim: #844b4f;
 
   /* ── Commerce accents (brand surfaces only)
    * Different category from the 5 system accents — these mean money,
@@ -117,18 +144,18 @@
    *   sage → purple → gold → rose → blue → neutral
    *   input  osc      env    filter rev    output
    */
-  --tint-input:       #607848;   /* moss */
-  --tint-oscillator:  #6860A0;   /* wisteria */
-  --tint-envelope:    #908048;   /* amber */
-  --tint-seedling:    #708858;   /* spring green */
-  --tint-scope:       #7870A0;   /* lavender */
-  --tint-sequencer:   #A08090;   /* dusty pink */
-  --tint-filter:      #986070;   /* rose */
-  --tint-reverb:      #5880A0;   /* indigo */
-  --tint-output:      #787880;   /* silver */
-  --tint-morph:       #707080;   /* blue-grey */
-  --tint-master:      #787880;   /* silver */
-  --tint-eq:          #5880A0;   /* indigo (FX chain) */
+  --tint-input:       #5b8057;   /* moss green */
+  --tint-oscillator:  #716e9f;   /* wisteria */
+  --tint-envelope:    #82743f;   /* amber */
+  --tint-seedling:    #53815d;   /* spring green */
+  --tint-scope:       #6c70a0;   /* lavender */
+  --tint-sequencer:   #96627b;   /* dusty rose */
+  --tint-filter:      #9b6269;   /* rose */
+  --tint-reverb:      #497a9c;   /* indigo */
+  --tint-output:      #5c75a1;   /* steel */
+  --tint-morph:       #6572a1;   /* blue-violet */
+  --tint-master:      #5c75a1;   /* steel */
+  --tint-eq:          #497a9c;   /* indigo (FX chain) */
 
   /* ── Quasar AFX accents
    * Two stage indicators for Quasar's CRYSTAL (high-Q resonant ring) and
@@ -195,13 +222,13 @@
    */
   --active:      var(--glow-white);
 
-  --danger:      #C85050;
+  --danger:      #c54d49;
 
   /* ── Glow shadows */
-  --glow-accent:  0 0 4px rgba(120, 104, 212, 0.15);
-  --glow-accent2: 0 0 4px rgba(112, 168, 216, 0.15);
-  --glow-accent4: 0 0 4px rgba(200, 168, 72, 0.10);
-  --glow-accent5: 0 0 4px rgba(120, 168, 88, 0.08);
+  --glow-accent:  0 0 4px rgba(125, 111, 216, 0.12);
+  --glow-accent2: 0 0 4px rgba(54, 140, 198, 0.10);
+  --glow-accent4: 0 0 4px rgba(64, 159, 118, 0.08);
+  --glow-accent5: 0 0 4px rgba(90, 124, 161, 0.08);
 
   /* ── Type — UI scale (inside instruments)
    * 10px ceiling, 7px floor. Line-heights snap to the 5px grid.
@@ -447,11 +474,12 @@
   --grain-panel:   url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --grain-control: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.8' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --grain-display: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-body-opacity:    0.40;
-  --grain-panel-opacity:   0.25;
-  --grain-wing-opacity:    0.35;
-  --grain-control-opacity: 0.15;
-  --grain-display-opacity: 0.08;
+  --grain-body-opacity:    0.35;
+  --grain-panel-opacity:   0.14;
+  --grain-wing-opacity:    0.30;
+  --grain-control-opacity: 0.10;
+  --grain-display-opacity: 0.05;
+  --grain-base-opacity:    0.55;   /* the foundation strip — heaviest grain */
 
   /* ── Text containment
    * Any text inside a width-constrained container (flex child with
@@ -547,15 +575,68 @@
   --optical-tight: 2.5px;   /* label hugging knob from below */
 
   /* ── Accent roles, in one place
-   *   --accent    purple    brand primary. Active, focus, LFO1.
+   *   --accent    purple    brand primary. Active, focus, LFO1.   (anchor)
    *   --accent2   blue      LFO2, cool complement.
-   *   --accent3   rose      danger / destructive.
-   *   --accent4   gold      lock + info states.
-   *   --accent5   sage      MTS-ESP source, the green light.
+   *   --accent3   rose      ENV2, floral, danger neighbour.
+   *   --accent4   jade      ENV1 + lock + info states.
+   *   --accent5   steel     MTS-ESP source + Motion 2 (quietest).
    *
    * Brand surfaces show --accent only.
-   * Instruments show all five, but --accent dominates by area.
+   * Instruments show all five, but --accent dominates by chroma weight.
    */
+
+  /* ── STATE GRAMMAR — one ladder for every interactive element ───────────
+   * Every control type (button / toggle / slider / knob / readout / tab /
+   * lane) speaks the SAME state ladder. These are SEMANTIC ROLE tokens: a
+   * new instrument inherits the grammar by consuming them, never by picking
+   * a raw color per control.
+   *
+   *   state      token              meaning
+   *   idle       --state-idle       at rest, present but quiet (chrome label)
+   *   hover      --state-hover      pointer is over it — affordance lift
+   *   active     --state-active     engaged / on / playing — the purple voice
+   *   selected   --state-selected   chosen of a set (= active)
+   *   disabled   --state-disabled   not available (alpha, not a hue)
+   *   locked     --state-locked     constrained to a scale — jade
+   *
+   * Bare-text controls ride the brightness ladder idle→hover→active:
+   *   --text-muted → --text → --active   (cool chrome lifts to warm to purple)
+   * Boxed controls add a surface: groove → control on active.
+   * The state tokens below are the canonical aliases; components reference
+   * THESE, and themes only need to retint the underlying accents/text.
+   */
+  --state-idle:     var(--text-muted);
+  --state-hover:    var(--text);
+  --state-active:   var(--active);
+  --state-selected: var(--active);
+  --state-locked:   var(--accent4);
+  --state-disabled: var(--alpha-disabled);   /* an alpha, applied via opacity */
+
+  /* ── Modulation roles — source-color logic (six mod sources) ────────────
+   * A source's color is its IDENTITY across every surface it touches: mod
+   * bar, dial mod-ring, LFO/ENV graph trace. Destinations are NOT colored
+   * (that was the old collision); only sources carry hue.
+   *
+   *   source     token       = accent       hue family
+   *   LFO 1      --mod1       --accent       purple
+   *   LFO 2      --mod2       --accent2      blue
+   *   ENV 1      --mod-env1   --accent-env1  jade
+   *   ENV 2      --mod-env2   --accent-env2  rose
+   *   Motion 1   --mod-mot1   --accent       purple (ratio lane)
+   *   Motion 2   --mod-mot2   --accent5      steel
+   */
+  --mod1:     var(--accent);
+  --mod1-dim: var(--accent-dim);
+  --mod2:     var(--accent2);
+  --mod2-dim: var(--accent2-dim);
+  --mod-env1: var(--accent-env1);
+  --mod-env2: var(--accent-env2);
+  --mod-mot1: var(--accent);
+  --mod-mot2: var(--accent5);
+  --lock:     var(--accent4);
+  --lock-dim: var(--accent4-dim);
+  --ext:      var(--accent5);      /* external connection (MTS-ESP) */
+  --ext-dim:  var(--accent5-dim);
 
   /* ── Surface overlay
    * Translucent surface for sticky bars, dropdowns over content.
@@ -583,19 +664,19 @@
    ────────────────────────────────────────────────────────── */
 
 :root[data-surface="website"] {
-  --bg:           #0C0B10;
-  --surface:      #14131A;
-  --surface-up:   #1C1B22;
-  --groove:       #08080C;
-  --groove-edge:  #201F28;
-  --control:      #1C1B24;
-  --control-edge: #28272E;
-  --border-light: #28272E;
-  --border:       #1C1B22;
-  --border-dim:   #121118;
-  --text:         #C8C6D0;
-  --text-dim:     #7C7A88;
-  --text-muted:   #4C4A58;
+  --bg:           #08080f;
+  --surface:      #101019;
+  --surface-up:   #1a1a24;
+  --groove:       #050509;
+  --groove-edge:  #1d1d28;
+  --control:      #18181f;
+  --control-edge: #26262f;
+  --border-light: #2b2b36;
+  --border:       #1a1a24;
+  --border-dim:   #100f18;
+  --text:         #d0cbc4;
+  --text-dim:     #7c7772;
+  --text-muted:   #56565f;
 }
 
 
@@ -608,81 +689,90 @@
 
 :root[data-dir="light"] {
 
-  /* ── Surfaces — kinari: cream with a grey-pink undertone, not yellow */
-  --bg:          #E2DCD4;
-  --surface:     #ECE8E0;
-  --surface-up:  #F4F2EC;
+  /* ── Surfaces — kinari: warm raw silk / kraft. h62 c0.018 in OKLCH.
+   * Visible warmth, not bleached, not yellow. Sibling of Nightshade through
+   * the shared OKLCH recipe — same ladder geometry, inverted light axis.
+   * Matches themeEngine.js Kinari output. */
+  --bg:          #ddd2c9;
+  --surface:     #e7dcd2;
+  --surface-up:  #f6eae1;
+  --surface-head:#cabfb5;
+  --surface-base:#baafa6;
 
-  /* ── Borders — pencil on paper, near-uniform spread */
-  --border-light: #C8C0B0;
-  --border:       #C0B8A8;
-  --border-dim:   #B8AE9E;
+  /* ── Borders — warm graphite pencil on kraft */
+  --border-light: #b1a9a4;
+  --border:       #99908a;
+  --border-dim:   #7a736e;
 
   /* ── Controls — pressed and raised paper */
-  --groove:       #D4CCBE;
-  --groove-edge:  #C0B6A4;
-  --control:      #EAE6DE;
-  --control-edge: #CEC6B6;
+  --groove:       #cabfb5;
+  --groove-edge:  #99908a;
+  --control:      #f6eae1;
+  --control-edge: #b1a9a4;
 
-  /* ── Text — sumi ink, always warm */
-  --text:        #2A2420;
-  --text-dim:    #6E6456;
-  --text-muted:  #9C9080;
+  /* ── Text — walnut ink on kraft, always warm. Inverted light axis:
+   * alive = darker. Four-tier ramp parallels Nightshade. */
+  --text:        #2f2721;
+  --text-value:  #433b36;
+  --text-dim:    #605955;
+  --text-muted:  #69625d;
 
-  /* ── Accents — botanical pigments, deep enough to read on cream */
+  /* ── Accents — deep botanical inks on cream. Same GUNDAM hues as
+   * Nightshade, deepened (lower L) to read on the kraft field. Purple
+   * stays the focal anchor; rose (beni) carries the most chroma after it. */
 
-  /* wisteria — fuji-iro */
-  --accent:      #5C48B4;
-  --accent-dim:  #483898;
-  --accent-glow: rgba(92, 72, 180, 0.15);
+  /* wisteria — fuji-iro (anchor) */
+  --accent:      #5a48ad;
+  --accent-dim:  #3f3771;
+  --accent-glow: rgba(90, 72, 173, 0.12);
 
   /* indigo — ai */
-  --accent2:     #3468A0;
-  --accent2-dim: #285088;
-  --accent2-glow:rgba(52, 104, 160, 0.15);
+  --accent2:     #0a5a9a;
+  --accent2-dim: #193f64;
+  --accent2-glow:rgba(10, 90, 154, 0.12);
 
-  /* peony — beni */
-  --accent3:     #C04858;
-  --accent3-dim: #983848;
+  /* beni — safflower rouge (ENV2) */
+  --accent3:     #9f3540;
+  --accent3-dim: #6a2e32;
 
-  /* saffron — ukon */
-  --accent4:     #A88818;
-  --accent4-dim: #886C10;
-  --accent4-glow:rgba(168, 136, 24, 0.10);
+  /* jade — tokiwa evergreen (ENV1 + lock) */
+  --accent4:     #0b764d;
+  --accent4-dim: #21533b;
+  --accent4-glow:rgba(11, 118, 77, 0.08);
 
-  /* moss — koke */
-  --accent5:     #5C8038;
-  --accent5-dim: #446828;
-  --accent5-glow:rgba(92, 128, 56, 0.08);
+  /* steel — koke on warm stone (MTS + Motion2) */
+  --accent5:     #385e83;
+  --accent5-dim: #2c4258;
+  --accent5-glow:rgba(56, 94, 131, 0.08);
 
-  /* ── Mod-source signal hues — deepened to read on cream */
-  --accent-env1:     #A07818;   /* gold — ENV 1 */
-  --accent-env1-dim: #7C5C10;
-  --accent-env2:     #2C8868;   /* jade — ENV 2 */
-  --accent-env2-dim: #206850;
+  /* ── Mod-source signal hues — env1 = jade, env2 = beni rose */
+  --accent-env1:     #0b764d;   /* jade — ENV 1 */
+  --accent-env1-dim: #21533b;
+  --accent-env2:     #9f3540;   /* rose — ENV 2 */
+  --accent-env2-dim: #6a2e32;
 
-  /* ── Active — pressed ink, no glow */
-  --glow-white:     #2A2420;
-  --glow-white-soft: rgba(42, 36, 32, 0.08);
-  --glow-white-med:  rgba(42, 36, 32, 0.12);
-  --glow-white-hot:  rgba(42, 36, 32, 0.18);
-  --active:      #2A2420;
+  /* ── Active — pressed wax seal with a purple kiss (not pure ink) */
+  --glow-white:     #49435e;
+  --glow-white-soft: rgba(73, 67, 94, 0.06);
+  --glow-white-med:  rgba(73, 67, 94, 0.10);
+  --glow-white-hot:  rgba(73, 67, 94, 0.18);
+  --active:      #49435e;
 
-  --danger:      #B04040;
+  --danger:      #aa3333;
 
-  /* ── Section tints — same energy band as dark theme, transposed to cream */
-  --tint-input:       #587040;   /* moss */
-  --tint-oscillator:  #584898;   /* wisteria */
-  --tint-envelope:    #806818;   /* saffron */
-  --tint-seedling:    #608040;   /* spring */
-  --tint-scope:       #685898;   /* violet */
-  --tint-sequencer:   #906070;   /* blush */
-  --tint-filter:      #984050;   /* rouge */
-  --tint-reverb:      #386088;   /* indigo */
-  --tint-output:      #686060;   /* warm grey */
-  --tint-morph:       #606068;   /* cool grey */
-  --tint-master:      #686060;   /* warm grey */
-  --tint-eq:          #386088;   /* indigo (FX chain) */
+  /* ── Section tints — same hues as dark theme, transposed deeper for cream */
+  --tint-input:       #486f44;   /* moss */
+  --tint-oscillator:  #605c8f;   /* wisteria */
+  --tint-envelope:    #726328;   /* amber */
+  --tint-seedling:    #3f704b;   /* spring */
+  --tint-scope:       #5a5e90;   /* violet */
+  --tint-sequencer:   #85506a;   /* blush */
+  --tint-filter:      #8b4f57;   /* rouge */
+  --tint-reverb:      #34698c;   /* indigo */
+  --tint-output:      #4a6391;   /* steel */
+  --tint-morph:       #536091;   /* blue-violet */
+  --tint-master:      #4a6391;   /* steel */
+  --tint-eq:          #34698c;   /* indigo (FX chain) */
 
   /* ── Quasar AFX accents — pigment-side
    * Crystal becomes a deeper teal-blue (cool ink). Grit deepens to a
@@ -706,17 +796,18 @@
   --key-octave-8: oklch(0.50 0.12 340);
 
   /* ── Glow shadows */
-  --glow-accent:  0 0 6px rgba(92, 72, 180, 0.15);
-  --glow-accent2: 0 0 6px rgba(52, 104, 160, 0.15);
-  --glow-accent4: 0 0 6px rgba(168, 136, 24, 0.10);
-  --glow-accent5: 0 0 6px rgba(92, 128, 56, 0.08);
+  --glow-accent:  0 0 6px rgba(90, 72, 173, 0.12);
+  --glow-accent2: 0 0 6px rgba(10, 90, 154, 0.10);
+  --glow-accent4: 0 0 6px rgba(11, 118, 77, 0.08);
+  --glow-accent5: 0 0 6px rgba(56, 94, 131, 0.08);
 
   /* ── Grain — paper fiber */
-  --grain-body-opacity:    0.25;
-  --grain-panel-opacity:   0.15;
-  --grain-wing-opacity:    0.20;
-  --grain-control-opacity: 0.08;
-  --grain-display-opacity: 0.04;
+  --grain-body-opacity:    0.10;
+  --grain-panel-opacity:   0.04;
+  --grain-wing-opacity:    0.08;
+  --grain-control-opacity: 0.02;
+  --grain-display-opacity: 0.01;
+  --grain-base-opacity:    0.20;
 }
 
 
@@ -889,6 +980,16 @@ body {
 /* ──────────────────────────────────────────────────────────
    AMBIENT FOCUS — Bloomscroll ambient interface tokens
    ────────────────────────────────────────────────────────── */
+
+/* Compatibility aliases — the Bloomscroll ambient classes below (.focus-*)
+   reference these legacy names. Map them to the canonical tokens so no
+   reference falls back silently. New work uses the canonical names directly. */
+:root {
+  --font-mono:    'Berkeley Mono', monospace;
+  --ls-button:    var(--ls-param-label);
+  --radius-sm:    var(--radius-soft);
+  --text-primary: var(--text);
+}
 
 /* Ambient state colors */
 :root {
