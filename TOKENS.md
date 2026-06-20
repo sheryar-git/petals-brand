@@ -386,6 +386,27 @@ Semantic state opacity. Animation keyframes use raw values — they're points on
 | `--alpha-strong` | 0.90 | Near-solid |
 | `--node-handle-dim` | 0.30 | Draggable handle hidden until its display is hovered, then a faint affordance (EnvCurve segment-bow handles). Brightens to `--alpha-strong` on its own hover. |
 
+## EnvCurve graph geometry
+
+SVG radii / strokes / opacities for the "Living Line" envelope editor. A self-contained micro-scale inside a 190×24 viewBox — NOT page spacing, so they live in their own named set rather than leaking raw numbers into the JSX. Brightness hierarchy (brightest → dimmest): playhead > line > nodes > trail > baseline > fill.
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--env-playhead-r` | 2 | The living playhead dot — lifted above the line |
+| `--env-playhead-glow-r` | 3.5 | Faint concentric halo ring around the playhead |
+| `--env-line-w` | 1.25 | Envelope silhouette stroke width |
+| `--env-line-opacity` | 0.75 | Envelope silhouette opacity |
+| `--env-node-r` | 2 | Active stage-corner node radius |
+| `--env-node-r-idle` | 1.5 | Inactive stage-corner node radius |
+| `--env-node-opacity` | 0.9 | Active node opacity |
+| `--env-node-opacity-idle` | 0.4 | Inactive node opacity |
+| `--env-bow-r` | 1.5 | Mid-segment curve bow-handle dot |
+| `--env-hit-r` | 5 | Transparent pointer-target ring (bow + node) — never drawn |
+| `--env-trail-r` | 1 | Phosphor trail-dot base radius |
+| `--env-baseline-w` | 0.5 | Value-0 floor-line stroke |
+| `--env-baseline-opacity` | 0.5 | Value-0 floor-line opacity |
+| `--env-fill-opacity` | 0.08 | Under-curve wash opacity |
+
 ## Accent roles
 
 Purple is the brand. The others are system indicators.

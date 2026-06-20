@@ -576,6 +576,39 @@
    * control, not a disabled one. Brightens to --alpha-strong on its own hover. */
   --node-handle-dim: 0.30;
 
+  /* ── EnvCurve graph geometry — the "Living Line" envelope display
+   * SVG radii / strokes / opacities for the draggable envelope editor.
+   * These are NOT spacing (they live in a 190×24 viewBox, not the 5px
+   * page grid) — they're a self-contained micro-scale, so they get their
+   * own named set instead of leaking raw numbers into the JSX.
+   *
+   * Brightness hierarchy (brightest → dimmest), enforced by these values:
+   *   playhead  >  live line  >  nodes  >  trail  >  baseline / fill
+   *
+   *   playhead     the living dot — brightest, lifted above the line
+   *   line         the envelope silhouette — the primary read
+   *   node         draggable stage corners
+   *   bow          mid-segment curve handles (hidden until hover)
+   *   hit          transparent pointer target ring (≥ node, never drawn)
+   *   trail        phosphor persistence behind the playhead
+   *   baseline     the value-0 floor line — recedes
+   *   fill         under-curve wash — quietest
+   */
+  --env-playhead-r:       2;      /* the living dot, lifted above the line */
+  --env-playhead-glow-r:  3.5;    /* faint concentric halo ring */
+  --env-line-w:           1.25;   /* envelope silhouette stroke */
+  --env-line-opacity:     0.75;
+  --env-node-r:           2;      /* active stage corner */
+  --env-node-r-idle:      1.5;    /* inactive stage corner */
+  --env-node-opacity:     0.9;    /* active corner */
+  --env-node-opacity-idle: 0.4;   /* inactive corner */
+  --env-bow-r:            1.5;    /* mid-segment curve handle dot */
+  --env-hit-r:            5;      /* transparent pointer target (bow + node) */
+  --env-trail-r:          1;      /* phosphor trail dot base radius */
+  --env-baseline-w:       0.5;    /* value-0 floor stroke */
+  --env-baseline-opacity: 0.5;
+  --env-fill-opacity:     0.08;   /* under-curve wash */
+
   /* ── Optical offsets
    * Sub-grid values for the rare cases where the 5px grid hurts the eye.
    * Use sparingly. Always comment the optical reason.
