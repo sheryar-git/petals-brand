@@ -583,13 +583,15 @@
    * own named set instead of leaking raw numbers into the JSX.
    *
    * Brightness hierarchy (brightest → dimmest), enforced by these values:
-   *   playhead  >  live line  >  nodes  >  trail  >  baseline / fill
+   *   playhead  >  live line  >  nodes  >  ghost  >  trail  >  baseline / fill
    *
    *   playhead     the living dot — brightest, lifted above the line
    *   line         the envelope silhouette — the primary read
    *   node         draggable stage corners
    *   bow          mid-segment curve handles (hidden until hover)
    *   hit          transparent pointer target ring (≥ node, never drawn)
+   *   ghost        KT / velocity what-if curves — faint, below the live line
+   *   loop         A↔D loop-region span + re-strike boundary marker
    *   trail        phosphor persistence behind the playhead
    *   baseline     the value-0 floor line — recedes
    *   fill         under-curve wash — quietest
@@ -610,6 +612,31 @@
   --env-baseline-w:       0.5;    /* value-0 floor stroke */
   --env-baseline-opacity: 0.5;
   --env-fill-opacity:     0.08;   /* under-curve wash */
+
+  /* ── Ghost curves — KT (key-track time-scale) + velocity "what-if" shapes.
+   * Faint, thin, dashed: clearly subordinate to the live silhouette but still
+   * legible as a second curve. Below the live line in the weight hierarchy. */
+  --env-ghost-opacity:    0.28;   /* ghost line opacity (< node, > trail) */
+  --env-ghost-w:          0.75;   /* thinner than the live line (1.25) */
+  --env-ghost-dash:       1.5 1.5;/* dotted — reads as projection, not a real edge */
+
+  /* ── Loop-mode indicator — the A↔D region that repeats (trigMode = loop).
+   * A faint span wash brightens the looped segment; a thin vertical marker at
+   * the decay→attack re-strike boundary says "this is where it loops back". */
+  --env-loop-span-opacity:   0.10;  /* A+D region wash — just above the fill */
+  --env-loop-marker-w:       0.75;  /* re-strike boundary tick */
+  --env-loop-marker-opacity: 0.55;  /* marker — reads, doesn't shout */
+
+  /* ── Sustain park — when the dot holds at the sustain node its glow breathes
+   * instead of advancing. Period in seconds; opacity floor/ceiling for the
+   * sine pulse (ceiling = the normal lit glow, floor = the dimmed trough). */
+  --env-sustain-pulse-period: 1.4;  /* seconds per breath */
+  --env-sustain-pulse-min:    0.45; /* glow opacity at the trough */
+  --env-sustain-pulse-max:    1;    /* glow opacity at the peak (full lit) */
+
+  /* ── Inactive-env playhead ghost — when viewing one env, the other env's dot
+   * still animates (both feeds are live) as a faint reference. */
+  --env-inactive-dot-opacity: 0.25;
 
   /* ── Optical offsets
    * Sub-grid values for the rare cases where the 5px grid hurts the eye.

@@ -408,6 +408,16 @@ SVG radii / strokes / opacities for the "Living Line" envelope editor. A self-co
 | `--env-baseline-w` | 0.5 | Value-0 floor-line stroke |
 | `--env-baseline-opacity` | 0.5 | Value-0 floor-line opacity |
 | `--env-fill-opacity` | 0.08 | Under-curve wash opacity |
+| `--env-ghost-opacity` | 0.28 | KT / velocity ghost-curve opacity — below the live line, above the trail |
+| `--env-ghost-w` | 0.75 | Ghost-curve stroke — thinner than the live line |
+| `--env-ghost-dash` | 1.5 1.5 | Ghost-curve dash array — dotted, reads as a projection not a real edge |
+| `--env-loop-span-opacity` | 0.10 | Loop-mode A↔D region wash — just above the under-fill |
+| `--env-loop-marker-w` | 0.75 | Loop re-strike boundary tick stroke |
+| `--env-loop-marker-opacity` | 0.55 | Loop re-strike marker opacity |
+| `--env-sustain-pulse-period` | 1.4 | Seconds per breath of the parked sustain glow |
+| `--env-sustain-pulse-min` | 0.45 | Sustain-glow opacity at the pulse trough |
+| `--env-sustain-pulse-max` | 1 | Sustain-glow opacity at the pulse peak (full lit) |
+| `--env-inactive-dot-opacity` | 0.25 | Faint dot for the non-viewed env, which still animates |
 
 ## Accent roles
 
