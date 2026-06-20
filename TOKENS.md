@@ -401,6 +401,7 @@ SVG radii / strokes / opacities for the "Living Line" envelope editor. A self-co
 | `--env-node-opacity` | 0.9 | Active node opacity |
 | `--env-node-opacity-idle` | 0.4 | Inactive node opacity |
 | `--env-bow-r` | 1.5 | Mid-segment curve bow-handle dot |
+| `--env-bow-rest` | 0.15 | Bow dot opacity at rest — findable, not loud. Lifts to `--node-handle-dim` on curve hover, `--alpha-strong` on its own hover. |
 | `--env-hit-r` | 5 | Transparent pointer-target ring (bow + node) — never drawn |
 | `--env-trail-r` | 1 | Phosphor trail-dot base radius |
 | `--env-baseline-w` | 0.5 | Value-0 floor-line stroke |

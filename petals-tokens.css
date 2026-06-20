@@ -603,6 +603,7 @@
   --env-node-opacity:     0.9;    /* active corner */
   --env-node-opacity-idle: 0.4;   /* inactive corner */
   --env-bow-r:            1.5;    /* mid-segment curve handle dot */
+  --env-bow-rest:         0.15;   /* bow dot at rest — findable, not loud */
   --env-hit-r:            5;      /* transparent pointer target (bow + node) */
   --env-trail-r:          1;      /* phosphor trail dot base radius */
   --env-baseline-w:       0.5;    /* value-0 floor stroke */
