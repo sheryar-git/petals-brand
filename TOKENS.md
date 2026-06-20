@@ -514,7 +514,7 @@ Three portable JS modules live alongside the CSS, imported by consumers via the 
 
 `typeScale.js` and `spacingScale.js` are the relational model behind the `--fs-*` and `--sp-*` ladders. They reproduce the current static token values EXACTLY — proof that the design and a relational generator are the same numbers.
 
-**Phase 0 status: ADDITIVE ONLY.** These modules are NOT wired into the live `--fs-*` / `--sp-*` tokens. The static tokens above remain the authority. Wiring scale output into the live CSS is Phase 1.
+**Phase 0 status: ADDITIVE ONLY.** The instrument-UI reproductions (`uiTypeLadder()`, `spacingLadder()`) are NOT wired into the live synth `--fs-*` / `--sp-*` tokens — the static synth tokens remain the authority. **Phase 1a** wires the SEPARATE *site* scales (`typeScale()`, `spacingScale()`) into the CSS via `gen-scale-tokens.mjs` codegen (see "Site scale codegen" below); the synth tokens stay untouched.
 
 ### Spacing model (`spacingScale.js`)
 
@@ -555,6 +555,61 @@ Brand (32/20/10) and page (15/12/11) tiers are held as explicit named anchors (`
 ### Weight
 
 Berkeley Mono ships one weight across every surface: `FONT_WEIGHT_NORMAL = 400`, exported as `--fw-normal` via `weightTokens()`. Named token, not a scattered literal.
+
+## Site scale codegen (`gen-scale-tokens.mjs`) — Phase 1a
+
+The **website** runs its own type/spacing/weight system, separate from the instrument UI ladder. It is **build-time generated**, not hand-maintained: `gen-scale-tokens.mjs` imports the relational scale fns and emits a generated `:root` block into `petals-tokens.css` between fixed markers.
+
+```
+/* === BEGIN GENERATED: site scales === */  …  /* === END GENERATED: site scales === */
+```
+
+The CSS stays the shippable artifact; the scales are the source. **One emitter, three tier-inputs** (type · spacing · weight) — never hand-maintain one tier while generating another.
+
+- **Source fns** — `typeScale()` + `spacingScale()` (added to `typeScale.js` / `spacingScale.js`), plus the `SITE_LINE_HEIGHT` / `SITE_LETTER_SPACING` / `SITE_WEIGHTS` maps.
+- **Run** — `node gen-scale-tokens.mjs` writes the block. **Idempotent**: a second run produces no diff. `--check` exits 1 if the block is stale (CI gate).
+- **Surgical** — it rewrites ONLY the marked block. Every byte outside the markers — every synth token — is untouched. Folium stays pixel-identical.
+
+All site tokens are namespaced (`--fs-site-*`, `--lh-site-*`, `--ls-site-*`, `--sp-site-*`, `--fw-*`) so they never collide with the instrument UI tokens (the synth `--fs-label` 7px, `--sp-1..6`, etc.).
+
+### Site type — `typeScale()`, geometric (modular scale)
+
+Where the UI ladder is arithmetic, the site ladder is **geometric**: base 16px, ratio √φ = 1.272 (two type steps = one golden φ leap). Integer-snapped.
+
+```
+siteFontSize(i) = round( 16 · 1.272^i )      i = step from body
+```
+
+| Token | px | role |
+|-------|----|------|
+| `--fs-site-caption` | 10 | fine print, footnotes |
+| `--fs-site-label` | 13 | UPPERCASE technical labels |
+| `--fs-site-body` | 16 | running copy |
+| `--fs-site-lead` | 20 | intro / large body |
+| `--fs-site-h3` | 26 | |
+| `--fs-site-h2` | 33 | |
+| `--fs-site-h1` | 42 | page titles |
+| `--fs-site-display` | 53 | section heroes |
+| `--fs-site-hero` | clamp(42px, 8vw, 68px) | the one big moment (fluid anchor) |
+
+Line-height (`--lh-site-*`) tightens as size grows — body/lead/label/caption 1.6 · h3/h2 1.25 · h1/display 1.12 · hero 1.0.
+Letter-spacing (`--ls-site-*`) tightens as size grows — hero/display -0.02em · h1/h2 -0.01em · h3/lead/body 0 · **label +0.12em** (wide-tracked) · caption +0.04em.
+Weight — `--fw-body` 400 · `--fw-label` 500 · `--fw-heading` 600 · `--fw-display` 700 (three weights max).
+
+### Site spacing — `spacingScale()`, Fibonacci on the 5px atom
+
+The website breathes at φ: each step is the next Fibonacci number × the 5px atom, so adjacent steps grow at ≈φ, snapped to grid. Same atom as the synth → the two systems lock.
+
+```
+Fibonacci [1,2,3,5,8,13,21] × 5  =  5, 10, 15, 25, 40, 65, 105
+```
+
+| Token | px |  | Token | px |
+|-------|----|--|-------|----|
+| `--sp-site-1` | 5 |  | `--sp-site-5` | 40 |
+| `--sp-site-2` | 10 |  | `--sp-site-6` | 65 |
+| `--sp-site-3` | 15 |  | `--sp-site-7` | 105 |
+| `--sp-site-4` | 25 |  | | |
 
 ## Instrument-level (not in here)
 

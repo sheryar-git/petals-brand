@@ -50,3 +50,43 @@ export function spacingLadder() {
   }
   return ladder;
 }
+
+// ════════════════════════════════════════════════════════════════════════
+// SITE SPACING — the website rhythm (Phase 1a, build-time codegen source)
+// ════════════════════════════════════════════════════════════════════════
+//
+// The website breathes at φ, not on the synth's pure-linear 5px multiples.
+// Its spacing is a FIBONACCI ladder on the 5px atom: each step is the next
+// Fibonacci number × 5px, so adjacent steps grow at ≈φ (snapped to the grid).
+//
+//   Fibonacci [1,2,3,5,8,13,21] × 5  =  5,10,15,25,40,65,105
+//
+// Reproduces the spec §4 ladder EXACTLY. Namespaced `--sp-site-N` so it never
+// collides with the synth's `--sp-1..6` (linear, 5..30px). Same 5px atom →
+// the two systems lock; a Folium embed beside body copy shares the rhythm.
+
+/** Fibonacci multipliers on the 5px atom — the site rhythm's source sequence. */
+export const SITE_FIB = [1, 2, 3, 5, 8, 13, 21];
+
+/**
+ * One site spacing value from its step index (1-based).
+ * @param {number} n  step (1 = --sp-site-1 = 5px)
+ * @returns {number}  pixels (integer on the 5px grid)
+ */
+export function siteSpace(n) {
+  return SITE_FIB[n - 1] * SPACING_UNIT;
+}
+
+/**
+ * The site spacing ladder as a { '--sp-site-N': 'Npx' } map.
+ * Reproduces the spec §4 values EXACTLY:
+ *   5, 10, 15, 25, 40, 65, 105
+ * @returns {Record<string, string>}
+ */
+export function spacingScale() {
+  const ladder = {};
+  for (let n = 1; n <= SITE_FIB.length; n++) {
+    ladder[`--sp-site-${n}`] = `${siteSpace(n)}px`;
+  }
+  return ladder;
+}

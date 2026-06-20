@@ -107,3 +107,110 @@ export function uiTypeLadder() {
 export function weightTokens() {
   return { '--fw-normal': String(FONT_WEIGHT_NORMAL) };
 }
+
+// ════════════════════════════════════════════════════════════════════════
+// SITE SCALE — the website type system (Phase 1a, build-time codegen source)
+// ════════════════════════════════════════════════════════════════════════
+//
+// The website runs a SEPARATE, geometric type ladder from the instrument UI.
+// Where the UI ladder is arithmetic (7..10px, +1px steps, read at 45cm), the
+// site ladder is GEOMETRIC — a modular scale built from the harmonic-lock
+// constants in the site spec: base 16px, ratio √φ = 1.272 (two type steps =
+// one φ leap, so type breathes at the golden proportion at half resolution).
+//
+//   siteFontSize(i) = round( SITE_BASE · SITE_RATIO^i )    i = step from body
+//
+// Integer-snapped, this reproduces the spec §2 ladder EXACTLY:
+//   caption 10 · label 13 · body 16 · lead 20 · h3 26 · h2 33 · h1 42 · display 53
+//
+// The site tokens are namespaced `--fs-site-*` so they NEVER collide with the
+// instrument `--fs-*` tokens (notably the synth's --fs-label = 7px). gen-scale-
+// tokens.mjs emits the generated block; this module is its source of truth.
+
+/** Base of the site type ladder — `body` sits here. */
+export const SITE_BASE = 16;   // px (--fs-site-body)
+/** Modular-scale ratio: √φ. Two type steps == one golden (φ) leap. */
+export const SITE_RATIO = 1.272;
+
+// Step index is measured from `body` (i = 0). Negative = smaller than body.
+// `hero` is a fluid clamp, not a fixed step — it is held as an explicit anchor.
+export const SITE_TYPE_STEPS = [
+  { token: '--fs-site-caption', i: -2 },
+  { token: '--fs-site-label',   i: -1 },
+  { token: '--fs-site-body',    i:  0 },
+  { token: '--fs-site-lead',    i:  1 },
+  { token: '--fs-site-h3',      i:  2 },
+  { token: '--fs-site-h2',      i:  3 },
+  { token: '--fs-site-h1',      i:  4 },
+  { token: '--fs-site-display', i:  5 },
+];
+
+/** Fluid hero anchor — the one big moment. Not on the stepped ladder. */
+export const SITE_HERO_CLAMP = 'clamp(42px, 8vw, 68px)';
+
+/**
+ * One site font size from its step index, integer-snapped.
+ * @param {number} i  step from body (0 = body = 16px)
+ * @returns {number}  pixels (integer)
+ */
+export function siteFontSize(i) {
+  return Math.round(SITE_BASE * Math.pow(SITE_RATIO, i));
+}
+
+/**
+ * Line-height per site tier — relational, tightens as size grows (optical law).
+ * Keyed by the bare tier name (no `--fs-site-` prefix). Emitted as `--lh-site-*`.
+ */
+export const SITE_LINE_HEIGHT = {
+  caption: '1.6',
+  label:   '1.6',
+  body:    '1.6',
+  lead:    '1.6',
+  h3:      '1.25',
+  h2:      '1.25',
+  h1:      '1.12',
+  display: '1.12',
+  hero:    '1.0',
+};
+
+/**
+ * Letter-spacing per site tier — relational curve, tighter as size grows.
+ * Emitted as `--ls-site-*`. (The PETALS wordmark keeps its own lockup tracking,
+ * NOT on this curve — those are the existing --ls-brand-* / --ls-lockup tokens.)
+ */
+export const SITE_LETTER_SPACING = {
+  hero:    '-0.02em',
+  display: '-0.02em',
+  h1:      '-0.01em',
+  h2:      '-0.01em',
+  h3:      '0',
+  lead:    '0',
+  body:    '0',
+  label:   '0.12em',   // wide-tracked UPPERCASE technical label — pure Petals
+  caption: '0.04em',
+};
+
+/**
+ * Site weight tokens (variable Berkeley Mono) — three weights max.
+ * Emitted as `--fw-*`. These are NEW names; the synth's --fw-normal is untouched.
+ */
+export const SITE_WEIGHTS = {
+  '--fw-body':    400,
+  '--fw-label':   500,
+  '--fw-heading': 600,
+  '--fw-display': 700,
+};
+
+/**
+ * The site type ladder as a { '--fs-site-*': value } map.
+ * Stepped tiers are integer px; `hero` is the fluid clamp anchor.
+ * @returns {Record<string, string>}
+ */
+export function typeScale() {
+  const ladder = {};
+  for (const { token, i } of SITE_TYPE_STEPS) {
+    ladder[token] = `${siteFontSize(i)}px`;
+  }
+  ladder['--fs-site-hero'] = SITE_HERO_CLAMP;
+  return ladder;
+}
