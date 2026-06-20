@@ -500,6 +500,62 @@ element.innerHTML = petalsMarkSVG(32);
 text-rendering: optimizeLegibility;
 ```
 
+## JS modules
+
+Three portable JS modules live alongside the CSS, imported by consumers via the same submodule. Each depends only on `culori` (already a consumer dep) or nothing.
+
+| Module | Exports | Role |
+|--------|---------|------|
+| `petals-mark.js` | `petalsMarkSVG`, `petalsMarkStroke` | Woven Star mark generator |
+| `themeEngine.js` | `THEMES`, `applyTheme`, `nextTheme`, `getThemeConfig`, `ratioColor` | OKLCH palette generator (Nightshade / Amiga) — the single source for runtime color. Depends on `culori`. |
+| `typeScale.js` · `spacingScale.js` | relational scale generators (below) | Pure JS, no deps. |
+
+## Relational scale modules
+
+`typeScale.js` and `spacingScale.js` are the relational model behind the `--fs-*` and `--sp-*` ladders. They reproduce the current static token values EXACTLY — proof that the design and a relational generator are the same numbers.
+
+**Phase 0 status: ADDITIVE ONLY.** These modules are NOT wired into the live `--fs-*` / `--sp-*` tokens. The static tokens above remain the authority. Wiring scale output into the live CSS is Phase 1.
+
+### Spacing model (`spacingScale.js`)
+
+Pure linear. One unit, multiplied by step index.
+
+```
+sp(n) = SPACING_UNIT · n        SPACING_UNIT = 5px,  n = 1..6
+```
+
+| Step | `space(n)` | Live token |
+|------|-----------|-----------|
+| 1 | 5px | `--sp-1` |
+| 2 | 10px | `--sp-2` |
+| 3 | 15px | `--sp-3` |
+| 4 | 20px | `--sp-4` |
+| 5 | 25px | `--sp-5` |
+| 6 | 30px | `--sp-6` |
+
+Move `SPACING_UNIT` → the whole grid re-pitches in balance.
+
+### Type model (`typeScale.js`)
+
+The instrument UI ladder is ARITHMETIC, not geometric — adjacent steps differ by a constant 1px, not a constant ratio (8/7 = 1.143 but 10/9 = 1.111; the ratios drift, the step does not). At a 7px floor with 3px of range, an integer-px arithmetic step is the honest model.
+
+```
+uiSize(i) = UI_BASE + UI_STEP · i      UI_BASE = 7px, UI_STEP = 1px,  i = 0..3
+```
+
+| i | `uiSize(i)` | Live token |
+|---|------------|-----------|
+| 0 | 7px | `--fs-label` |
+| 1 | 8px | `--fs-secondary` |
+| 2 | 9px | `--fs-value` |
+| 3 | 10px | `--fs-header` |
+
+Brand (32/20/10) and page (15/12/11) tiers are held as explicit named anchors (`BRAND_SCALE`, `PAGE_SCALE`) — they are display/lockup choices, not a stepped ladder.
+
+### Weight
+
+Berkeley Mono ships one weight across every surface: `FONT_WEIGHT_NORMAL = 400`, exported as `--fw-normal` via `weightTokens()`. Named token, not a scattered literal.
+
 ## Instrument-level (not in here)
 
 Knob hierarchy · canvas size · slider/bar dimensions · theme variants · voice viz · MTS-ESP prismatic palette · modulation routing UI.
