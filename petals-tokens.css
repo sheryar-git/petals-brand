@@ -596,6 +596,7 @@
    */
   --env-playhead-r:       2;      /* the living dot, lifted above the line */
   --env-playhead-glow-r:  3.5;    /* faint concentric halo ring */
+  --env-glow-mix:         16%;    /* halo = env dye mixed this far into transparent */
   --env-line-w:           1.25;   /* envelope silhouette stroke */
   --env-line-opacity:     0.75;
   --env-node-r:           2;      /* active stage corner */

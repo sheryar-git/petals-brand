@@ -394,6 +394,7 @@ SVG radii / strokes / opacities for the "Living Line" envelope editor. A self-co
 |-------|-------|-----|
 | `--env-playhead-r` | 2 | The living playhead dot — lifted above the line |
 | `--env-playhead-glow-r` | 3.5 | Faint concentric halo ring around the playhead |
+| `--env-glow-mix` | 16% | Halo fill = the env's own dye (`--env-accent`) mixed this far into transparent. Keeps the halo on-identity (ochre / madder), never the brand purple. |
 | `--env-line-w` | 1.25 | Envelope silhouette stroke width |
 | `--env-line-opacity` | 0.75 | Envelope silhouette opacity |
 | `--env-node-r` | 2 | Active stage-corner node radius |
