@@ -705,6 +705,37 @@
 
 
 /* ──────────────────────────────────────────────────────────
+   TRANSACTIONAL SURFACE — the receipt
+   ──────────────────────────────────────────────────────────
+   Cream paper, ink, one purple accent. The voice of every
+   touchpoint AFTER the sale: order emails, the download page,
+   the success screen, the PETALS001 newsletter. Calm, printed,
+   warm — a receipt, not the instrument and not the gallery wall.
+
+   This surface had NO token home before: emails (webhook.js),
+   download.js, success.astro, and the newsletter all hardcoded
+   the SAME cream palette by hand. This block is its single home.
+   Astro pages switch with data-surface="transactional" + var(--*);
+   non-CSS surfaces (Netlify functions, email HTML) pull the same
+   values resolved through brand-values.js.
+
+   Accent is the brand purple — the ONE purple, shared with every
+   other surface. Overrides surface / border / text + adds
+   --separator (the hairline rule that divides receipt rows).
+   ────────────────────────────────────────────────────────── */
+
+:root[data-surface="transactional"] {
+  --bg:         #F4F2EE;   /* cream paper */
+  --surface:    #FFFFFF;   /* card / panel lifted off the paper */
+  --text:       #2A2A2A;   /* ink — body + headings */
+  --text-dim:   #7C7A88;   /* secondary — labels, meta */
+  --text-muted: #A8A6B0;   /* quietest — captions, fine print */
+  --separator:  #D4D2CC;   /* hairline rule between rows */
+  --accent:     #7868D4;   /* murasaki — the one brand purple */
+}
+
+
+/* ──────────────────────────────────────────────────────────
    LIGHT MODE — Kinari
    ──────────────────────────────────────────────────────────
    Cream paper, ink, pigments. The instrument feels printed,

@@ -210,6 +210,24 @@ Overrides surface / border / text only. Accents inherit from Nightshade so the b
 | `--text-dim` | #7C7A88 |
 | `--text-muted` | #4C4A58 |
 
+### Transactional surface — `:root[data-surface="transactional"]`
+
+The "receipt." The voice of every touchpoint AFTER the sale: order emails, the download page, the success screen, the PETALS001 newsletter. Cream paper, ink, one purple accent. Calm, printed, warm — a receipt, not the instrument and not the gallery wall.
+
+Before this block these surfaces had no token home: emails (`webhook.js`), `download.js`, `success.astro`, and the newsletter each hardcoded the same cream palette by hand. This is its single home. Astro pages switch with `data-surface="transactional"` + `var(--*)`; non-CSS surfaces (Netlify functions, email HTML, a Stripe sheet) pull the same values resolved through `brand-values.js`.
+
+Overrides surface / border / text + adds `--separator` (the hairline rule that divides receipt rows). Accent is the brand purple — the one purple, shared with every surface.
+
+| Token | Hex | Role |
+|-------|-----|------|
+| `--bg` | #F4F2EE | cream paper |
+| `--surface` | #FFFFFF | card lifted off the paper |
+| `--text` | #2A2A2A | ink — body + headings |
+| `--text-dim` | #7C7A88 | secondary — labels, meta |
+| `--text-muted` | #A8A6B0 | quietest — captions, fine print |
+| `--separator` | #D4D2CC | hairline rule between rows |
+| `--accent` | #7868D4 | murasaki — the one brand purple |
+
 ### Surface overlay (theme-aware translucent)
 
 | Token | Value | Use |
@@ -508,7 +526,26 @@ Three portable JS modules live alongside the CSS, imported by consumers via the 
 |--------|---------|------|
 | `petals-mark.js` | `petalsMarkSVG`, `petalsMarkStroke` | Woven Star mark generator |
 | `themeEngine.js` | `THEMES`, `applyTheme`, `nextTheme`, `getThemeConfig`, `ratioColor` | OKLCH palette generator (Nightshade / Amiga) — the single source for runtime color. Depends on `culori`. |
+| `brand-values.js` | `getBrandValues` | The EMIT LAYER (below). Resolves brand values for NON-CSS surfaces. |
 | `typeScale.js` · `spacingScale.js` | relational scale generators (below) | Pure JS, no deps. |
+
+### Emit layer (`brand-values.js`)
+
+CSS surfaces read the tokens; non-CSS surfaces can't. `getBrandValues(surface)` returns RESOLVED values — literal hex strings + px numbers — for emails, Netlify-function-generated HTML, and a Stripe checkout sheet. It exports only what the post-sale touchpoints use (the audit's value list), not a token dump.
+
+```js
+import { getBrandValues } from '../../branding/tokens/brand-values.js';
+const b = getBrandValues('transactional');   // 'transactional' | 'nightshade' | 'kinari'
+// b.colors.{accent, accentText, bg, surface, text, textDim, textMuted, separator}
+// b.mark.{color, strokeColor}   b.type.{heading, body, label}  (px numbers)
+```
+
+- **`transactional`** → the cream receipt palette (mirrors the `data-surface="transactional"` CSS block; the one literal palette, since cream has no `themeEngine` source).
+- **`nightshade` / `kinari`** → DERIVED from `themeEngine.js` — no hex re-typed.
+- `accent` is the brand purple `#7868D4`, `accentText` white, on every surface.
+- Depends on `culori` (via `themeEngine`, for the derived themes only); resolves from the consumer's `node_modules`, bundled by Netlify into the function.
+
+**Change a value here — or the token / theme it derives from — and re-deploy → every email and function-rendered page re-emits with it.** One edit, every receipt.
 
 ## Relational scale modules
 
