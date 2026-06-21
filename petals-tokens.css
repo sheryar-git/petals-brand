@@ -719,12 +719,17 @@
    non-CSS surfaces (Netlify functions, email HTML) pull the same
    values resolved through brand-values.js.
 
+   The selector matches the document root (a whole transactional page)
+   AND any subtree element — so a page whose <html> is pinned to another
+   surface (e.g. Base.astro's data-surface="website") can still scope a
+   cream receipt block by setting data-surface="transactional" on a wrapper.
+
    Accent is the brand purple — the ONE purple, shared with every
    other surface. Overrides surface / border / text + adds
    --separator (the hairline rule that divides receipt rows).
    ────────────────────────────────────────────────────────── */
 
-:root[data-surface="transactional"] {
+[data-surface="transactional"] {
   --bg:         #F4F2EE;   /* cream paper */
   --surface:    #FFFFFF;   /* card / panel lifted off the paper */
   --text:       #2A2A2A;   /* ink — body + headings */

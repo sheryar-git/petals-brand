@@ -29,9 +29,11 @@
 //
 // Dependency: culori, via themeEngine.js (only for the derived themes). Resolves
 // from the consumer's node_modules (the website / each instrument already ship it);
-// Netlify bundles it into the function. 'transactional' needs no culori.
-
-import { getThemeConfig } from './themeEngine.js';
+// Netlify bundles it into the function. 'transactional' needs no culori — and to
+// keep it that way, themeEngine is imported LAZILY (dynamic import, only on the
+// nightshade/kinari branch). So the transactional path stays synchronous and never
+// drags culori; that's why getBrandValues() is sync and getThemedBrandValues() —
+// the themed path — is async.
 
 // ── The brand purple — the one accent, every surface. White reads on it. ──
 const BRAND_ACCENT = '#7868D4';
@@ -52,7 +54,9 @@ const TRANSACTIONAL_COLORS = {
 };
 
 /** Pull the eight receipt colors from a themeEngine theme (nightshade / kinari). */
-function colorsFromTheme(name) {
+async function colorsFromTheme(name) {
+  // Lazy: only the themed surfaces pull themeEngine (and through it, culori).
+  const { getThemeConfig } = await import('./themeEngine.js');
   const t = getThemeConfig(name);
   return {
     accent:     BRAND_ACCENT,         // the one purple — not the theme's dark/cream-tuned accent
@@ -77,10 +81,24 @@ const TYPE = {
   label:   10,   // section labels, fine print (= --fs-brand-compact)
 };
 
+/** Assemble the returned shape from a resolved color set. */
+function pack(surface, colors) {
+  return {
+    surface,
+    colors,
+    // The petals mark renders in the accent (its stroke = the brand purple).
+    mark: { color: colors.accent, strokeColor: colors.accent },
+    type: { ...TYPE },
+  };
+}
+
 /**
- * Resolved brand values for a non-CSS surface.
+ * Resolved brand values for the TRANSACTIONAL (cream receipt) surface.
+ * Synchronous: a literal palette, no themeEngine, no culori. This is the path
+ * every live touchpoint uses (receipt emails, download page, success screen,
+ * the Stripe sheet). For nightshade/kinari, use getThemedBrandValues().
  *
- * @param {'transactional'|'nightshade'|'kinari'} [surface='transactional']
+ * @param {'transactional'} [surface='transactional']
  * @returns {{
  *   surface: string,
  *   colors: { accent:string, accentText:string, bg:string, surface:string,
@@ -90,15 +108,23 @@ const TYPE = {
  * }}
  */
 export function getBrandValues(surface = 'transactional') {
-  const colors =
-    surface === 'transactional' ? { ...TRANSACTIONAL_COLORS }
-                                : colorsFromTheme(surface);
+  if (surface !== 'transactional') {
+    throw new Error(
+      `getBrandValues('${surface}') is sync and transactional-only. ` +
+      `For themed surfaces use: await getThemedBrandValues('${surface}').`,
+    );
+  }
+  return pack(surface, { ...TRANSACTIONAL_COLORS });
+}
 
-  return {
-    surface,
-    colors,
-    // The petals mark renders in the accent (its stroke = the brand purple).
-    mark: { color: colors.accent, strokeColor: colors.accent },
-    type: { ...TYPE },
-  };
+/**
+ * Resolved brand values for a THEMED surface (nightshade / kinari).
+ * Async: lazily loads themeEngine (and culori) only when actually called, so
+ * the transactional path stays culori-free.
+ *
+ * @param {'nightshade'|'kinari'} surface
+ * @returns {Promise<ReturnType<typeof getBrandValues>>}
+ */
+export async function getThemedBrandValues(surface) {
+  return pack(surface, await colorsFromTheme(surface));
 }
