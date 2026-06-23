@@ -191,6 +191,13 @@
   --glow-accent4: 0 0 4px rgba(88, 151, 210, 0.08);
   --glow-accent5: 0 0 4px rgba(120, 143, 167, 0.06);
 
+  /* ── Depth shadows — ambient occlusion at milled edges.
+     Static first-paint truth; themeEngine.applyTheme() re-sets these per theme
+     at runtime in lockstep. Panels carry --shadow-panel; floating layers (menus,
+     drag readouts) carry --shadow-float. */
+  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30), 0 1px 0 rgba(0,0,0,0.45), 0 2px 5px rgba(0,0,0,0.18);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.5);
+
   /* ── Type — UI scale (inside instruments)
    * 10px ceiling, 7px floor. Line-heights snap to the 5px grid.
    * Every font-size MUST set the matching line-height.
@@ -549,10 +556,10 @@
    *   baseline     the value-0 floor line — recedes
    *   fill         under-curve wash — quietest
    */
-  --env-playhead-r:       2;      /* the living dot, lifted above the line */
-  --env-playhead-glow-r:  3.5;    /* faint concentric halo ring */
+  --env-playhead-r:       1.3;    /* the living dot, lifted above the line — sized to the 0.6 silhouette + r1.5–2 nodes, not a ball */
+  --env-playhead-glow-r:  2.2;    /* faint concentric halo ring — in scale with the dot */
   --env-glow-mix:         16%;    /* halo = env dye mixed this far into transparent */
-  --env-line-w:           0.75;   /* envelope silhouette stroke — renders ~0.81px in the 190-wide viewBox, in harmony with the dial arc strokes (was 1.25 → 1.35px, too heavy) */
+  --env-line-w:           0.6;   /* envelope silhouette stroke — renders ~0.81px in the 190-wide viewBox, in harmony with the dial arc strokes (was 1.25 → 1.35px, too heavy) */
   --env-line-opacity:     0.75;
   --env-node-r:           2;      /* active stage corner */
   --env-node-r-idle:      1.5;    /* inactive stage corner */
@@ -847,6 +854,11 @@
   --glow-accent2: 0 0 6px rgba(10, 90, 154, 0.10);
   --glow-accent4: 0 0 6px rgba(11, 118, 77, 0.08);
   --glow-accent5: 0 0 6px rgba(56, 94, 131, 0.08);
+
+  /* ── Depth shadows — paper-light variant (softer occlusion on the cream
+     field). Matches themeEngine KINARI --shadow-panel / --shadow-float. */
+  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.10);
 
   /* ── Grain — paper fiber */
   --grain-body-opacity:    0.10;

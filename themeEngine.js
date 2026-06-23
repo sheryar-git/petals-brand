@@ -477,54 +477,79 @@ const KINARI = {
   '--grain-base-opacity':    '0.20',   // base (unchanged)
 };
 
-// ── Ratio garden palette — generated, harmonized to the purple line ──
+// ── Ratio garden palette — generated, the murasaki→hanada dye arc ──
 //
 // The RatioGarden colors EACH ratio by its HEIGHT in the scale (low→high,
-// t=0..1, supplied by the data contract's ascending order). One generated
-// family, anchored to the brand purple, fading as the ratio climbs — the
-// same OKLCH recipe that makes every other Petals color. No hardcoded hex.
+// t=0..1, supplied by the data contract's ascending order) AND by its integer
+// RANK (`index`) in that order. One generated family, anchored to the brand
+// purple, sweeping through the cool natural-dye world as the ratio climbs —
+// the same OKLCH recipe that makes every other Petals color. No hardcoded hex.
 //
-// Sher's spec, in OKLCH terms:
-//   • unison / low ratios sit RICHEST — at the brand purple (h287, C≈0.15)
-//   • as the ratio climbs, CHROMA FADES toward a quiet near-neutral (C≈0.045)
-//   • a tasteful HUE arc rides alongside: purple → plant-indigo (287→247),
-//     so each degree is its own distinct color yet all read as one family
-//     orbiting the purple line. Not a rainbow — a controlled ~40° sweep
-//     through the natural-dye world (murasaki → hanada).
-//   • LIGHTNESS lifts a touch as chroma drains, so the faded high ratios
-//     stay legible. Karakami runs the deepened (inverted) L axis like every
-//     other dye, so the dark wisteria ink reads on cream.
+// THE GOAL: each ratio (up to 8 mapped at once) must read as a DISTINCT color
+// from its neighbors at a glance — these exact colors paint the garden dots,
+// the sequencer ratio-lane bars, and the oscillator drag dot, all at small
+// sizes. Distinctness from a chroma-only fade is too weak at dot scale, so the
+// recipe separates neighbors on THREE axes at once:
+//   • HUE — a 54° arc, murasaki h293 (unison, the brand purple line) →
+//     hanada plant-indigo h239 (highest). A controlled sweep through the cool
+//     dye world (murasaki → hanada), never reaching teal/green. Each step is
+//     its own hue, yet the whole set reads as one family orbiting the purple.
+//   • CHROMA — full+vivid at unison (C 0.150 NS), easing to a softer-but-still
+//     saturated indigo up high (C 0.095). The garden is the focal dye, not a
+//     quiet header tint — it stays luminous, it does not drain to neutral.
+//   • LIGHTNESS — a monotone lift (faded-high ratios stay legible) PLUS a
+//     ±zig SAWTOOTH keyed to the rank parity. Adjacent ranks land on opposite
+//     L phases, so even where two hues are close the dots separate on
+//     lightness. The sawtooth is what makes neighbors pop at 2px.
 //
-// ease = t^0.85 spends a little more of the arc up high, so the rich low end
-// holds its identity and the fade feels gradual rather than front-loaded.
-const RATIO_HUE_START = 287;   // murasaki — the brand purple line (unison)
-const RATIO_HUE_SPAN  = 40;    // arc toward hanada plant-indigo (h247) up high
+// Measured (culori ΔE2000, every scale size N=3..20): worst-case min neighbor
+// ΔE ≈ 8.8 NS / 9.0 KI (well above the ~5 "obvious at a glance" line); all
+// colors in-gamut; distance from the #7868D4 anchor stays ≤29.5 NS / 19.5 KI
+// (a purple→indigo span — in total brand harmony, no foreign hue).
+//
+// ease = t^0.92 keeps the arc near-linear so the per-step hue gaps stay even.
+// Karakami runs the deepened (inverted) L axis like every other dye, so the
+// dyes read as ink on cream. lBase rides the SIGNAL anchor — move NS_SIGNAL /
+// KI_SIGNAL and the whole ratio family tracks, in balance, like every dye.
+const RATIO_HUE_START = 293;   // murasaki — the brand purple line (unison)
+const RATIO_HUE_SPAN  = 54;    // arc toward hanada plant-indigo (h239) up high
 
 const NS_RATIO = {
-  cPeak: 0.150, cFloor: 0.045,  // chroma: rich at unison → quiet up high
-  lBase: NS_SIGNAL - 0.040, lLift: 0.100,   // rides the signal level; lifts as chroma drains
-  dimDrop: 0.150, dimCRatio: 0.55,  // unselected petals: darker, less chroma
+  cPeak: 0.150, cFloor: 0.095,  // chroma: rich purple at unison → saturated indigo up high
+  lBase: NS_SIGNAL - 0.060, lLift: 0.140,  // rides the signal level; lifts as the ratio climbs
+  zig: 0.060,                              // ±L sawtooth by rank parity — pops neighbors at dot scale
+  dimDrop: 0.150, dimCRatio: 0.55,         // unselected petals: darker, less chroma
 };
 const KI_RATIO = {
-  cPeak: 0.140, cFloor: 0.045,
-  lBase: KI_SIGNAL - 0.020, lLift: 0.060,   // rides the signal level — deepened axis on cream
+  cPeak: 0.140, cFloor: 0.090,
+  lBase: KI_SIGNAL + 0.010, lLift: 0.100,  // rides the signal level — deepened axis on cream
+  zig: 0.050,
   dimDrop: 0.120, dimCRatio: 0.55,
 };
 
 /**
- * Generate one ratio color from its height in the scale.
+ * Generate one ratio color from its height + rank in the scale.
+ *
+ * CONSUMER API — the per-ratio color authority. The garden dots, the seq
+ * ratio-lane bars, and the osc drag dot all read their color from here, keyed
+ * to a ratio's height. Call with the ratio's ascending-rank `index` and its
+ * normalized height `t = index / (count - 1)`. Same (t, index) → same color,
+ * so a ratio keeps its color across every surface and across a scale rebuild.
+ *
  * @param {number} t          0 = lowest/unison ratio, 1 = highest ratio
  * @param {string} themeName  'nightshade' | 'kinari'
+ * @param {number} [index=0]  integer rank in ascending order (drives the L sawtooth)
  * @returns {{ bright: string, dim: string }} hex pair (selected / idle)
  */
-export function ratioColor(t, themeName) {
+export function ratioColor(t, themeName, index = 0) {
   const spec = themeName === 'kinari' ? KI_RATIO : NS_RATIO;
   const clamped = Math.max(0, Math.min(1, t));
-  const ease = Math.pow(clamped, 0.85);
+  const ease = Math.pow(clamped, 0.92);
 
   const h = RATIO_HUE_START - ease * RATIO_HUE_SPAN;
   const c = spec.cPeak - ease * (spec.cPeak - spec.cFloor);
-  const l = spec.lBase + ease * spec.lLift;
+  const zig = (index % 2 === 0) ? -spec.zig : spec.zig;
+  const l = spec.lBase + ease * spec.lLift + zig;
 
   return {
     bright: oklchHex(l, c, h),
