@@ -195,10 +195,11 @@
      Static first-paint truth; themeEngine.applyTheme() re-sets these per theme
      at runtime in lockstep. Panels carry --shadow-panel; floating layers (menus,
      drag readouts) carry --shadow-float.
-     INSET-ONLY: the brand bans drop shadows — hierarchy is size/position/color.
-     The panel edge is read by the milled top-light / bottom-shade insets, which
-     reach 0px below the panel, so a sealed faceplate never clips them. */
-  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30);
+     A restrained outer drop gives panels lift; the milled top-light / bottom-shade
+     insets read on top of it. The drop reaches ~6px below the panel (offset 1.5 +
+     blur 4); the consumer pads the grid bottom (borrowed from .plugin's pad) so
+     the bottom row's drop paints INSIDE the sealed faceplate clip. */
+  --shadow-panel: 0 1.5px 4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30);
   --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.5);
 
   /* ── Type — UI scale (inside instruments)
@@ -860,9 +861,9 @@
 
   /* ── Depth shadows — paper-light variant (softer occlusion on the cream
      field). Matches themeEngine KINARI --shadow-panel / --shadow-float.
-     INSET-ONLY in lockstep with Nightshade — no outer drop, reaches 0px below
-     the panel, so the sealed faceplate never clips. */
-  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06);
+     Outer drop in lockstep with Nightshade but lower alpha so it doesn't muddy
+     the cream; same 6px reach → same consumer bottom-pad allowance. */
+  --shadow-panel: 0 1.5px 4px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06);
   --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.10);
 
   /* ── Grain — paper fiber */

@@ -89,7 +89,9 @@ const NS_DIM_DROP = 0.13;     // dim lightness drop
 const NS_DIM_C_RATIO = 0.62;  // dim chroma multiplier
 
 // The two bright anchors (the floor is the dark one, see NS_FLOOR below).
-const NS_CEIL   = 0.965;  // bright pole — interaction/glow + primary text ride this
+const NS_CEIL   = 0.900;  // bright pole — interaction/glow + primary text ride this
+                          // (0.965→0.900: pulled off the near-white glare so primary text
+                          //  reads ~10.6 on the panel, matching Amiga's balance, not 15.3)
 const NS_SIGNAL = 0.660;  // meaning-color brightness — the dye family + tints ride this
                           // (each dye keeps its own perceptual offset from NS_SIGNAL)
 
@@ -117,18 +119,23 @@ const NS_ACCENTS = {
 // ── SURFACE FAMILY SWAP — one-line change ──
 // To re-temper the whole dark surface body, swap NS_SURFACE_H / NS_SURFACE_C
 // to one of these documented alternates (the L ladder below stays as-is):
-//   KACHI  褐  indigo-black  H 255  C 0.016   ← APPLIED (blue soul)
-//   SUMI   墨  neutral black H  any C 0.004   (pure near-black, no temp)
+//   SUMI   墨  neutral grey  H 252  C 0.004   ← APPLIED (true graphite, faint cool soul)
+//   KACHI  褐  blue-grey     H 252  C 0.020   (blue-slate, reads distinctly blue)
 //   MURASAKI 紫 purple-black H 287  C 0.014   (wisteria-black, brand-tinted)
-const NS_SURFACE_H = 268;    // cool-violet-grey — on the murasaki→hanada arc (anchor 287 → indigo 257)
-const NS_SURFACE_C = 0.014;  // low chroma — reads as a tinted graphite, not blue
+const NS_SURFACE_H = 252;    // hue is a near-invisible COOL BASE at this chroma — keeps the faint soul
+                             // cool (graphite), never warm/muddy. The grey is neutral to the eye.
+const NS_SURFACE_C = 0.004;  // near-zero — true neutral graphite (rgb spread 3), not a tinted field.
+                             // Drop to 0.000 for a dead-flat grey; 0.004 keeps a beautiful cool soul.
 
 // FLOOR-ANCHORED ladder: set NS_FLOOR (the bg darkness), everything above is a
 // fixed ΔL offset from it. The whole stack tracks the floor, so the panel-lift
 // balance holds at any darkness. Additive offsets, not a ratio — OKLCH L is
 // perceptually linear, so a fixed ΔL is a constant perceived lift whether the
 // floor is near-black or grey. (A ratio would collapse the gaps toward black.)
-const NS_FLOOR = 0.100;   // bg darkness — the one knob
+const NS_FLOOR = 0.160;   // bg darkness — the one knob
+                          // (0.100→0.160: lifted off near-black #020307 to a breathing
+                          //  graphite #0b0d13. The whole surface/border/control ladder
+                          //  tracks it, so the field reads balanced like Amiga, not crushed.)
 const NS_SURFACES = {
   bg:          { l: NS_FLOOR },          // floor
   surface:     { l: NS_FLOOR + 0.055 },  // panel — lifts off the floor
@@ -245,9 +252,9 @@ const NIGHTSHADE = {
   // step above the surface, so chrome stays recessed instead of creeping louder
   // as the floor goes blacker.
   '--text':       oklchHex(NS_CEIL - 0.065, NS_TEXT_C, NS_TEXT_H),  // ceiling-relative — bright bone
-  '--text-value': oklchHex(NS_CEIL - 0.205, NS_TEXT_C, NS_TEXT_H),  // ceiling-relative — ivory value words
+  '--text-value': oklchHex(NS_CEIL - 0.143, NS_TEXT_C, NS_TEXT_H),  // ceiling-relative — ivory value words (inner tier — offset 0.205→0.143 so value isn't starved when the ceiling drops)
   '--text-dim':   oklchHex(NS_FLOOR + 0.470, NS_TEXT_C, NS_TEXT_H),  // floor-relative — secondary
-  '--text-muted': oklchHex(NS_FLOOR + 0.350, NS_TEXT_C, NS_TEXT_H),  // floor-relative — quiet chrome
+  '--text-muted': oklchHex(NS_FLOOR + 0.442, NS_TEXT_C, NS_TEXT_H),  // floor-relative — quiet chrome (offset 0.350→0.442: 7px labels now read ~4.5, dim→muted gap matches Amiga's 0.030)
 
   // ── Natural-dye family — color for MEANING (mod sources / sections) ──
 
@@ -332,9 +339,10 @@ const NIGHTSHADE = {
   '--glow-accent5': `0 0 4px ${oklchRgba(NS_ACCENTS.nezumi.l, NS_ACCENTS.nezumi.c, NS_ACCENTS.nezumi.h, 0.06)}`,
 
   // Shadows — ambient occlusion at milled edges.
-  // Inset-only: top-light / bottom-shade insets read the milled edge with no
-  // outer drop, so the sealed faceplate never clips the bottom row.
-  '--shadow-panel': 'inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30)',
+  // Restrained outer drop for lift; milled top-light/bottom-shade insets read on
+  // top. Drop reaches ~6px below — the consumer pads the grid bottom so the
+  // bottom row's drop paints inside the sealed faceplate clip.
+  '--shadow-panel': '0 1.5px 4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30)',
   '--shadow-float': '0 4px 12px rgba(0, 0, 0, 0.5)',
 
   // Grain — anodized metal.
@@ -462,9 +470,9 @@ const KINARI = {
   '--glow-accent4': `0 0 6px ${oklchRgba(KI_ACCENTS.hanada.l, KI_ACCENTS.hanada.c, KI_ACCENTS.hanada.h, 0.08)}`,
   '--glow-accent5': `0 0 6px ${oklchRgba(KI_ACCENTS.nezumi.l, KI_ACCENTS.nezumi.c, KI_ACCENTS.nezumi.h, 0.06)}`,
 
-  // Shadows — gentler on porcelain. Inset-only, lockstep with Nightshade — no
-  // outer drop, so the sealed faceplate never clips.
-  '--shadow-panel': 'inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06)',
+  // Shadows — gentler on porcelain. Outer drop in lockstep with Nightshade but
+  // lower alpha so it doesn't muddy the cream; same 6px reach, same consumer pad.
+  '--shadow-panel': '0 1.5px 4px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06)',
   '--shadow-float': '0 4px 16px rgba(0, 0, 0, 0.10)',
 
   // Grain — porcelain micro-texture. Lighter = less grain.
