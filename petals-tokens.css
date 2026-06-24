@@ -197,6 +197,11 @@
      drag readouts) carry --shadow-float. */
   --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30), 0 1px 0 rgba(0,0,0,0.45), 0 2px 5px rgba(0,0,0,0.18);
   --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.5);
+  /* Paint allowance below a --shadow-panel: its outer drop is 0 2px 5px, so the
+     shadow reaches 2+5 = 7px past the panel's bottom edge. A sealed faceplate
+     (overflow:hidden) clips anything past the edge — reserve this much below the
+     bottom row so the panel shadow paints inside the clip. */
+  --shadow-reserve: 7px;
 
   /* ── Type — UI scale (inside instruments)
    * 10px ceiling, 7px floor. Line-heights snap to the 5px grid.
@@ -859,6 +864,10 @@
      field). Matches themeEngine KINARI --shadow-panel / --shadow-float. */
   --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.05);
   --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.10);
+  /* Paper-light panel shadow reaches 2+4 = 6px below the edge, but the reserve
+     stays 7px in lockstep with Nightshade — the faceplate clip is theme-agnostic
+     and the extra 1px is harmless headroom. */
+  --shadow-reserve: 7px;
 
   /* ── Grain — paper fiber */
   --grain-body-opacity:    0.10;
