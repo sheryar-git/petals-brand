@@ -194,14 +194,12 @@
   /* ── Depth shadows — ambient occlusion at milled edges.
      Static first-paint truth; themeEngine.applyTheme() re-sets these per theme
      at runtime in lockstep. Panels carry --shadow-panel; floating layers (menus,
-     drag readouts) carry --shadow-float. */
-  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30), 0 1px 0 rgba(0,0,0,0.45), 0 2px 5px rgba(0,0,0,0.18);
+     drag readouts) carry --shadow-float.
+     INSET-ONLY: the brand bans drop shadows — hierarchy is size/position/color.
+     The panel edge is read by the milled top-light / bottom-shade insets, which
+     reach 0px below the panel, so a sealed faceplate never clips them. */
+  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30);
   --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.5);
-  /* Paint allowance below a --shadow-panel: its outer drop is 0 2px 5px, so the
-     shadow reaches 2+5 = 7px past the panel's bottom edge. A sealed faceplate
-     (overflow:hidden) clips anything past the edge — reserve this much below the
-     bottom row so the panel shadow paints inside the clip. */
-  --shadow-reserve: 7px;
 
   /* ── Type — UI scale (inside instruments)
    * 10px ceiling, 7px floor. Line-heights snap to the 5px grid.
@@ -861,13 +859,11 @@
   --glow-accent5: 0 0 6px rgba(56, 94, 131, 0.08);
 
   /* ── Depth shadows — paper-light variant (softer occlusion on the cream
-     field). Matches themeEngine KINARI --shadow-panel / --shadow-float. */
-  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.05);
+     field). Matches themeEngine KINARI --shadow-panel / --shadow-float.
+     INSET-ONLY in lockstep with Nightshade — no outer drop, reaches 0px below
+     the panel, so the sealed faceplate never clips. */
+  --shadow-panel: inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06);
   --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.10);
-  /* Paper-light panel shadow reaches 2+4 = 6px below the edge, but the reserve
-     stays 7px in lockstep with Nightshade — the faceplate clip is theme-agnostic
-     and the extra 1px is harmless headroom. */
-  --shadow-reserve: 7px;
 
   /* ── Grain — paper fiber */
   --grain-body-opacity:    0.10;

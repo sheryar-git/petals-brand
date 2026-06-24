@@ -332,11 +332,10 @@ const NIGHTSHADE = {
   '--glow-accent5': `0 0 4px ${oklchRgba(NS_ACCENTS.nezumi.l, NS_ACCENTS.nezumi.c, NS_ACCENTS.nezumi.h, 0.06)}`,
 
   // Shadows — ambient occlusion at milled edges.
-  // Tight, asymmetric, directional (light from above).
-  '--shadow-panel': 'inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30), 0 1px 0 rgba(0,0,0,0.45), 0 2px 5px rgba(0,0,0,0.18)',
+  // Inset-only: top-light / bottom-shade insets read the milled edge with no
+  // outer drop, so the sealed faceplate never clips the bottom row.
+  '--shadow-panel': 'inset 0 1px 0 rgba(255,255,255,0.05), inset 0 -1px 0 rgba(0,0,0,0.30)',
   '--shadow-float': '0 4px 12px rgba(0, 0, 0, 0.5)',
-  // Faceplate clip allowance below a panel shadow (2+5 px reach). Theme-agnostic.
-  '--shadow-reserve': '7px',
 
   // Grain — anodized metal.
   // 2026-06-12 tier-2 — panel grain pulled down (0.20 → 0.14) so 7 px
@@ -463,11 +462,10 @@ const KINARI = {
   '--glow-accent4': `0 0 6px ${oklchRgba(KI_ACCENTS.hanada.l, KI_ACCENTS.hanada.c, KI_ACCENTS.hanada.h, 0.08)}`,
   '--glow-accent5': `0 0 6px ${oklchRgba(KI_ACCENTS.nezumi.l, KI_ACCENTS.nezumi.c, KI_ACCENTS.nezumi.h, 0.06)}`,
 
-  // Shadows — gentler on porcelain. Naturally visible on light surfaces.
-  '--shadow-panel': 'inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.05)',
+  // Shadows — gentler on porcelain. Inset-only, lockstep with Nightshade — no
+  // outer drop, so the sealed faceplate never clips.
+  '--shadow-panel': 'inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -1px 0 rgba(0,0,0,0.06)',
   '--shadow-float': '0 4px 16px rgba(0, 0, 0, 0.10)',
-  // Faceplate clip allowance — lockstep with Nightshade (theme-agnostic 7px).
-  '--shadow-reserve': '7px',
 
   // Grain — porcelain micro-texture. Lighter = less grain.
   // 2026-06-12 tier-2 — panel + control + display all eased one notch so
