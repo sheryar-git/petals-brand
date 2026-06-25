@@ -397,6 +397,36 @@
    * Drag: movementX. Normal 350px/full travel. Shift = fine, 2000px.
    */
 
+  /* ── Slider primitive (the tokenized horizontal-slider module)
+   * One fixed-size track-box, identical height for EVERY slider — ticked or
+   * slim. Width-derived SVG scaling is dead: the track-box height is a token in
+   * PX, so it never changes with column width. The dot is a CSS-positioned
+   * round element (left = norm %), so it stays a perfect circle at any width —
+   * a viewBox circle would stretch to an ellipse when the box fills width.
+   * Ticks live in a SEPARATE zone BELOW the track-box, so adding ticks is an
+   * addition, never a height change. Every osc/FX/ADSR row sizes to
+   * --slider-row-h and aligns its label to the track center for free.
+   */
+  --slider-track-w:    125;     /* viewBox width units — the shared 125 coord space */
+  --slider-track-box:  11px;    /* fixed track-box height — the row's optical core */
+  --slider-track-h:    5px;     /* the groove channel height (matches geometry doc) */
+  --slider-dot-d:      4px;     /* cursor-dot diameter at rest (r=2) */
+  --slider-dot-d-act:  5px;     /* cursor-dot diameter while dragging (r=2.5) */
+  --slider-mark-d:     4px;     /* ghost / post-mod ring diameter (r=2) */
+  --slider-tickzone-h: 5px;     /* decoupled tick zone below the track-box */
+  --slider-tick-d:     2px;     /* snap-guide tick dot diameter (r=1) */
+  --slider-mark-stroke: 0.75px; /* ghost / post-mod ring stroke (canonical track stroke) */
+  --slider-detent-w:   0.8px;   /* bipolar center-zero notch width */
+  --slider-detent-over: 4px;    /* notch overhang past the groove (2px each end) */
+  --slider-detent-r:   0.4px;   /* notch corner radius (= half its width) */
+  --slider-dot-idle-o:  0.8;    /* cursor dot resting opacity */
+  --slider-detent-o:    0.7;    /* center-detent opacity */
+  /* A phantom spacer of tickzone height sits ABOVE the track too, so the track
+   * box is symmetric about the wrap center → the row's align-items:center lands
+   * the label dead on the track center, ticked or slim, at any width.
+   * Row = spacer + track-box + tickzone. */
+  --slider-row-h:      21px;
+
   /* ── Layout — golden ratio
    * Canvas: 840 × 480 (7:4)
    * Grid: 210 | 340 (1fr) | 210, gap 20
