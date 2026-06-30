@@ -78,7 +78,7 @@
    *   accent4  hanada/縹     indigo    lock + Motion 1 (plant indigo)
    *   accent5  nezumi/藍鼠   grey-indigo MTS + Motion 2 (quietest)
    *
-   * ENV 1 = kihada/黄檗 ochre (--accent-env1, below) — green moved OFF env
+   * ENV 1 = yamabuki/山吹 bright gold (--accent-env1, below) — green moved OFF env
    * onto LFO 2 per Sher. Greens: one, matcha (LFO 2).
    */
   --accent:      #887be2;
@@ -116,15 +116,15 @@
    *   mod source   dye               token          = accent
    *   LFO 1        murasaki purple   --accent        anchor
    *   LFO 2        matcha green      --accent2
-   *   ENV 1        kihada ochre      --accent-env1
+   *   ENV 1        yamabuki gold     --accent-env1
    *   ENV 2        beni madder       --accent-env2   = accent3
    *   Motion 1     hanada indigo     --accent4       (= lock)
    *   Motion 2     nezumi grey       --accent5       (quietest)
    *
    * Same OKLCH energy band as the accents — natural, not garish, reads on --bg.
    */
-  --accent-env1:     #caa764;
-  --accent-env1-dim: #97825c;
+  --accent-env1:     #ecc246;
+  --accent-env1-dim: #b49c5a;
   --accent-env2:     #d67064;
   --accent-env2-dim: #955951;
 
@@ -147,12 +147,12 @@
    * read as one pigment world. Restrained chroma: these tint a header strip,
    * they do not shout.
    *
-   *   matcha → murasaki → kihada → beni → hanada → nezumi
-   *   input    osc        env      filter reverb   output
+   *   matcha → murasaki → yamabuki → beni → hanada → nezumi
+   *   input    osc        env        filter reverb   output
    */
   --tint-input:       #668463;   /* wakatake green */
   --tint-oscillator:  #77759d;   /* fuji wisteria */
-  --tint-envelope:    #8c7751;   /* kihada ochre */
+  --tint-envelope:    #9b7c19;   /* yamabuki gold */
   --tint-seedling:    #618568;   /* young leaf */
   --tint-scope:       #6b799f;   /* hanada-violet */
   --tint-sequencer:   #9b6c6d;   /* beni dust */
@@ -846,9 +846,9 @@
   --accent5-dim: #36414d;
   --accent5-glow:rgba(74, 93, 113, 0.06);
 
-  /* ── Mod-source signal hues — env1 = kihada ochre, env2 = beni madder */
-  --accent-env1:     #89692a;   /* kihada ochre — ENV 1 */
-  --accent-env1-dim: #62502d;
+  /* ── Mod-source signal hues — env1 = yamabuki gold, env2 = beni madder */
+  --accent-env1:     #a58100;   /* yamabuki gold — ENV 1 */
+  --accent-env1-dim: #7b672d;
   --accent-env2:     #9d3d34;   /* beni madder — ENV 2 */
   --accent-env2-dim: #6a322c;
 
@@ -865,7 +865,7 @@
   /* ── Section tints — natural-dye hues, transposed deeper for cream */
   --tint-input:       #4d6d49;   /* wakatake green */
   --tint-oscillator:  #605d88;   /* fuji wisteria */
-  --tint-envelope:    #775f34;   /* kihada ochre */
+  --tint-envelope:    #7c5f00;   /* yamabuki gold */
   --tint-seedling:    #466e4e;   /* young leaf */
   --tint-scope:       #52628b;   /* hanada-violet */
   --tint-sequencer:   #865354;   /* beni dust */

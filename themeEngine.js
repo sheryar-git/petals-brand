@@ -11,7 +11,7 @@
 // source dyes are harmonic rotations off it — traditional Japanese pigments:
 //   murasaki 藤  h287  anchor             · LFO 1
 //   matcha  若竹 h142  split-comp green    · LFO 2
-//   kihada  黄檗 h82   split-comp ochre    · ENV 1
+//   yamabuki 山吹 h90   bright gold · ENV 1
 //   beni    紅   h47   triadic rust        · ENV 2
 //   hanada  縹   h257  analogous −30 indigo· Motion 1 / lock
 //   nezumi  藍鼠 h257  analogous, greyed   · Motion 2 / MTS (quietest)
@@ -100,7 +100,7 @@ const NS_ACCENTS = {
   // Move NS_SIGNAL and the whole family brightens/dims together, balance preserved.
   murasaki: { l: NS_SIGNAL - 0.020, c: 0.150, h: 287 },  // 藤 fuji — brand anchor · LFO 1
   matcha:   { l: NS_SIGNAL + 0.040, c: 0.095, h: 142 },  // 若竹 bamboo green · LFO 2
-  kihada:   { l: NS_SIGNAL + 0.085, c: 0.095, h: 82 },   // 黄檗 cork-bark ochre · ENV 1
+  yamabuki: { l: NS_SIGNAL + 0.170, c: 0.145, h: 90 },   // 山吹 bright gold · ENV 1
   beni:     { l: NS_SIGNAL + 0.005, c: 0.125, h: 47 },   // 紅 safflower → triadic rust (h47) · ENV 2
   hanada:   { l: NS_SIGNAL - 0.005, c: 0.110, h: 257 },  // 縹 plant indigo (analogous −30) · Motion 1
   nezumi:   { l: NS_SIGNAL - 0.005, c: 0.035, h: 257 },  // 藍鼠 mouse-grey indigo (analogous, greyed) · Motion 2
@@ -119,13 +119,13 @@ const NS_ACCENTS = {
 // ── SURFACE FAMILY SWAP — one-line change ──
 // To re-temper the whole dark surface body, swap NS_SURFACE_H / NS_SURFACE_C
 // to one of these documented alternates (the L ladder below stays as-is):
-//   SUMI   墨  neutral grey  H 252  C 0.004   ← APPLIED (true graphite, faint cool soul)
-//   KACHI  褐  blue-grey     H 252  C 0.020   (blue-slate, reads distinctly blue)
-//   MURASAKI 紫 purple-black H 287  C 0.014   (wisteria-black, brand-tinted)
-const NS_SURFACE_H = 252;    // hue is a near-invisible COOL BASE at this chroma — keeps the faint soul
-                             // cool (graphite), never warm/muddy. The grey is neutral to the eye.
-const NS_SURFACE_C = 0.004;  // near-zero — true neutral graphite (rgb spread 3), not a tinted field.
-                             // Drop to 0.000 for a dead-flat grey; 0.004 keeps a beautiful cool soul.
+//   AINEZUMI 藍鼠 indigo-grey H 257  C 0.009   ← APPLIED (cool nezumi — on the murasaki→hanada arc)
+//   RIKYU 利休鼠 green-grey  H 158  C 0.010   (tea-master nezumi — warm-cool, organic)
+//   SUMI   墨  dead grey     H any  C 0.004   (flat graphite, no soul)
+const NS_SURFACE_H = 257;    // ai-nezumi 藍鼠 — the brand's own mouse-grey indigo hue (= the nezumi dye).
+                             // A quiet cool indigo soul, on the murasaki→hanada arc. Most on-brand grey.
+const NS_SURFACE_C = 0.009;  // low — a whisper of indigo, NOT the 0.020 that read as a blue panel.
+                             // Keep ≤0.012 or it tips from grey toward visibly blue.
 
 // FLOOR-ANCHORED ladder: set NS_FLOOR (the bg darkness), everything above is a
 // fixed ΔL offset from it. The whole stack tracks the floor, so the panel-lift
@@ -174,8 +174,8 @@ const NS_TEXT_C = 0.005;
 // Karakami inherits the natural-dye family, lowered in L (darker = alive on
 // the cream field, bg L 0.87) and tuned in chroma so each dye sits beautiful
 // and legible on raw silk. Purple holds the brand hue/chroma at the light
-// anchor L. matcha/kihada carry a touch more chroma than Nightshade so the
-// green and ochre don't wash out on cream. Per-dye { l, c, h }.
+// anchor L. matcha/yamabuki carry a touch more chroma than Nightshade so the
+// green and gold don't wash out on cream. Per-dye { l, c, h }.
 // Dim variant = L − KI_DIM_DROP, C × NS_DIM_C_RATIO.
 const KI_DIM_DROP = 0.10;
 
@@ -189,7 +189,7 @@ const KI_ACCENTS = {
   // L = KI_SIGNAL + per-dye perceptual offset (mirrors Nightshade, deepened for cream).
   murasaki: { l: KI_SIGNAL - 0.015, c: 0.140, h: 287 },  // 藤 fuji-iro anchor · LFO 1
   matcha:   { l: KI_SIGNAL + 0.010, c: 0.092, h: 142 },  // 若竹 bamboo green · LFO 2
-  kihada:   { l: KI_SIGNAL + 0.050, c: 0.090, h: 82 },   // 黄檗 cork-bark ochre · ENV 1
+  yamabuki: { l: KI_SIGNAL + 0.130, c: 0.130, h: 90 },   // 山吹 bright gold · ENV 1
   beni:     { l: KI_SIGNAL - 0.003, c: 0.115, h: 47 },   // 紅 safflower → triadic rust (h47) · ENV 2
   hanada:   { l: KI_SIGNAL - 0.020, c: 0.100, h: 257 },  // 縹 plant indigo (analogous −30) · Motion 1
   nezumi:   { l: KI_SIGNAL - 0.020, c: 0.040, h: 257 },  // 藍鼠 mouse-grey indigo (analogous, greyed) · Motion 2
@@ -205,7 +205,7 @@ const KI_ACCENTS = {
 const NS_TINT_C = 0.115;
 const KI_TINT_C = 0.110;
 const TINT_HUES = {
-  input: 142, oscillator: 287, envelope: 82, seedling: 150,
+  input: 142, oscillator: 287, envelope: 90, seedling: 150,
   scope: 268, sequencer: 18, filter: 28, reverb: 248,
   output: 250, morph: 287, master: 250, eq: 248,
 };
@@ -274,10 +274,10 @@ const NIGHTSHADE = {
   '--accent4-dim':  oklchHex(NS_ACCENTS.hanada.l - NS_DIM_DROP, NS_ACCENTS.hanada.c * NS_DIM_C_RATIO, NS_ACCENTS.hanada.h),
   '--accent4-glow': oklchRgba(NS_ACCENTS.hanada.l, NS_ACCENTS.hanada.c, NS_ACCENTS.hanada.h, 0.08),
 
-  // Mod-source ENV tokens — ENV 1 = kihada ochre (green moved OFF env),
+  // Mod-source ENV tokens — ENV 1 = yamabuki gold (was kihada ochre),
   // ENV 2 = beni madder.
-  '--accent-env1':     oklchHex(NS_ACCENTS.kihada.l, NS_ACCENTS.kihada.c, NS_ACCENTS.kihada.h),
-  '--accent-env1-dim': oklchHex(NS_ACCENTS.kihada.l - NS_DIM_DROP, NS_ACCENTS.kihada.c * NS_DIM_C_RATIO, NS_ACCENTS.kihada.h),
+  '--accent-env1':     oklchHex(NS_ACCENTS.yamabuki.l, NS_ACCENTS.yamabuki.c, NS_ACCENTS.yamabuki.h),
+  '--accent-env1-dim': oklchHex(NS_ACCENTS.yamabuki.l - NS_DIM_DROP, NS_ACCENTS.yamabuki.c * NS_DIM_C_RATIO, NS_ACCENTS.yamabuki.h),
   '--accent-env2':     oklchHex(NS_ACCENTS.beni.l, NS_ACCENTS.beni.c, NS_ACCENTS.beni.h),
   '--accent-env2-dim': oklchHex(NS_ACCENTS.beni.l - NS_DIM_DROP, NS_ACCENTS.beni.c * NS_DIM_C_RATIO, NS_ACCENTS.beni.h),
 
@@ -319,7 +319,7 @@ const NIGHTSHADE = {
   '--mod1-dim': 'var(--accent-dim)',
   '--mod2':     'var(--accent2)',     // LFO2 — matcha green
   '--mod2-dim': 'var(--accent2-dim)',
-  '--mod-env1': 'var(--accent-env1)', // ENV1 — kihada ochre
+  '--mod-env1': 'var(--accent-env1)', // ENV1 — yamabuki gold
   '--mod-env2': 'var(--accent-env2)', // ENV2 — beni madder
   '--mod-mot1': 'var(--accent4)',     // Motion1 — hanada indigo
   '--mod-mot2': 'var(--accent5)',     // Motion2 — nezumi grey-indigo
@@ -413,9 +413,9 @@ const KINARI = {
   '--accent4-dim':  oklchHex(KI_ACCENTS.hanada.l - KI_DIM_DROP, KI_ACCENTS.hanada.c * NS_DIM_C_RATIO, KI_ACCENTS.hanada.h),
   '--accent4-glow': oklchRgba(KI_ACCENTS.hanada.l, KI_ACCENTS.hanada.c, KI_ACCENTS.hanada.h, 0.08),
 
-  // Mod-source ENV tokens — ENV 1 = kihada ochre, ENV 2 = beni madder.
-  '--accent-env1':     oklchHex(KI_ACCENTS.kihada.l, KI_ACCENTS.kihada.c, KI_ACCENTS.kihada.h),
-  '--accent-env1-dim': oklchHex(KI_ACCENTS.kihada.l - KI_DIM_DROP, KI_ACCENTS.kihada.c * NS_DIM_C_RATIO, KI_ACCENTS.kihada.h),
+  // Mod-source ENV tokens — ENV 1 = yamabuki gold, ENV 2 = beni madder.
+  '--accent-env1':     oklchHex(KI_ACCENTS.yamabuki.l, KI_ACCENTS.yamabuki.c, KI_ACCENTS.yamabuki.h),
+  '--accent-env1-dim': oklchHex(KI_ACCENTS.yamabuki.l - KI_DIM_DROP, KI_ACCENTS.yamabuki.c * NS_DIM_C_RATIO, KI_ACCENTS.yamabuki.h),
   '--accent-env2':     oklchHex(KI_ACCENTS.beni.l, KI_ACCENTS.beni.c, KI_ACCENTS.beni.h),
   '--accent-env2-dim': oklchHex(KI_ACCENTS.beni.l - KI_DIM_DROP, KI_ACCENTS.beni.c * NS_DIM_C_RATIO, KI_ACCENTS.beni.h),
 
